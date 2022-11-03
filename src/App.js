@@ -1,14 +1,20 @@
 import './App.css';
-import { useState } from 'react';
-import { Wrapper } from "@googlemaps/react-wrapper";
-import { ElMap } from './map';
+import React, { useState } from 'react';
+import { ElNavBar } from './content';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+import { Home, Superficial, Subterraneo } from './content';
 
+let path = [];
 
-let path = []
 
 function App() {
 
   const [dark, setDark] = useState(false);
+
   const [map, setMap] = useState();
   const center = { lat: -15.794393510614238, lng: -47.670852661132805 };
   const zoom = 10;
@@ -86,16 +92,28 @@ function App() {
     setTypeDraw('Marker')
   }
 
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap}/>,
+    },
+    {
+      path: "/superficial",
+      element: <Superficial center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap}/>,
+    },
+    {
+      path: "/subterraneo",
+      element: <Subterraneo center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap}/>,
+    },
+  ]);
+
   return (
-    <div className={`${dark ? "dark" : "light"}`}>
-      <div> tailwind working</div>
-      <div> dark mode working </div>
-      <div>map working</div>
-      <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} >
-        {/*mapa*/}
-        <ElMap center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
-      </Wrapper>
-      <button className='bg-green-500 dark:bg-orange-500' onClick={() => { setDark(!dark) }}>{dark === true ? "Light" : "Dark"}</button>
+    <div className={`${dark ? 'dark' : 'light'}`}>
+      <ElNavBar dark={dark} setDark={setDark} />
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
     </div>
   );
 }
