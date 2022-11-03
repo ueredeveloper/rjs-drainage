@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-//import './index.css'
+import { darkMap } from './dark-map';
 /**
-* Map element
-  *
-  *
-  */
+  * Elemento mapa
+*/
 
-function ElMap ({ map, setMap, center, zoom, onClick }) {
+function ElMap({ dark, map, setMap, center, zoom, onClick }) {
 
   const ref = useRef();
-  
+
   useEffect(() => {
     if (ref.current && !map) {
       setMap(
@@ -26,6 +24,17 @@ function ElMap ({ map, setMap, center, zoom, onClick }) {
       map.addListener("click", onClick);
     }
   }, [ref, map, onClick]);
+  /**
+  * Setar mapa noturno ao escolher o tema dark.
+    *
+    *
+    */
+  useEffect(() => {
+    if (map) {
+      dark ? map.setOptions({ styles: darkMap }) : map.setOptions({ styles: [] });
+    }
+
+  }, [map, dark])
 
   return <div className="h-80" ref={ref} id="map" />;
 }
