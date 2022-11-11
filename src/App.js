@@ -1,146 +1,121 @@
-import './App.css';
-import React, { useState } from 'react';
-import { ElNavBar } from './content';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-} from "react-router-dom";
-import { Home, Superficial, Subterraneo } from './content';
+import React, { useEffect, useState, useMemo, createContext, useContext } from 'react';
+// material ui
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+// my components
+import { TopBar } from './header';
+import { Home, CollapsibleTable } from './content';
 
-let path = [];
+const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
-function App() {
+export default function App() {
+  const [mode, setMode] = useState('light');
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
 
-  const [dark, setDark] = useState(false);
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: {
+            main: '#153170',
+          },
+          secondary: {
+            main: '#037B35',
+            light: '#808d77',
+            dark: '#2a3623',
+            contrastText: 'rgba(251,251,251,0.87)',
+          },
+          error: {
+            main: '#ff0004',
+          },
+          warning: {
+            main: '#ffeb00',
+          }
+        }
+      }),
+    [mode],
+  );
 
   const [map, setMap] = useState();
   const center = { lat: -15.794393510614238, lng: -47.670852661132805 };
   const zoom = 10;
-  /*
+
   const [data, setData] = useState({
     markers: [],
-    polilynes: [{ finish: false }],
-    circles: []
+    circles: [],
+    polygons: [],
+    polylines: [],
+    rectangles: []
   });
-  */
- const [data, setData] = useState([])
-  const onClick = function(e) {
-    //console.log({ lat: e.latLng.lat(), lng: e.latLng.lng() })
-    if (typeDraw === 'Marker') {
 
-      let options = {
-        position: { lat: e.latLng.lat(), lng: e.latLng.lng() },
-        map: map,
-        title: "Hello World!",
-      }
+  useEffect(() => {
+    console.log(data)
+  }, [data]);
 
-      setData(prev => {
-     //   return { ...prev, markers: [...prev.markers, { options }] }
-      });
-    }
-    else if (typeDraw === 'Circle') {
-      let options = {
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#FF0000",
-        fillOpacity: 0.35,
-        map,
-        center: { lat: e.latLng.lat(), lng: e.latLng.lng() },
-        radius: Math.sqrt(100) * 100,
-      }
-
-      setData(prev => {
-      //  return { ...prev, circles: [...prev.circles, { options }] }
-      });
-    }
-    else {
-      // retira o ultimo valor
-      if (path.length > 0) path.pop();
-      // adiciona o valor atual
-      path = [...path, { lat: e.latLng.lat(), lng: e.latLng.lng() }]
-      // adiciona o primeiro valor no fim da array para fechar a polilinha
-      path.push(path[0]);
-
-      let options = {
-        finish: false,
-        path: path,
-        geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        map
-      }
-      /*
-      setData(prev => {
-        let len = prev.polilynes.length;
-        if (prev.polilynes[len - 1].finish === false) {
-          return { ...prev, ...prev.polilynes[len - 1] = options }
-        } else {
-          return { ...prev, polilynes: [...prev.polilynes, options] }
-        }
-      })*/
-    //  console.log(data.polilynes);
-    }
+  function onClick() {
+    console.log('on click')
   }
 
-  const clearMarkers = () => {
-    /*
-    setData(prev => {
-      // retirar os marcardores do mapa
-      prev.markers.forEach(m => {
-        m.options.map = null
-      });
-      // retirar os marcadores do estado => data
-      return { ...prev, markers: [] }
-    })*/
-  }
-  const finishPolilyne = () => {
-    path = [];
-    // setar finish = true na poliline criada
-    /*
-    setData(prev => {
-      let len = prev.polilynes.length;
-      return { ...prev, ...prev.polilynes[len - 1].finish = true }
-    })*/
-  }
-  const [typeDraw, setTypeDraw] = useState('Circle')
-  const createPolilyne = () => {
-    setTypeDraw('Polyline')
-  }
-  const createMarker = () => {
-    setTypeDraw('Marker')
-  }
+  const [value, setValue] = useState("1");
 
-  const createCircle = () => {
-    setTypeDraw('Circle')
-  }
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home dark={dark} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />,
-    },
-    {
-      path: "/superficial",
-      element: <Superficial dark={dark} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />,
-    },
-    {
-      path: "/subterraneo",
-      element: <Subterraneo dark={dark} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />,
-    },
-  ]);
-
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
-    <div className={`${dark ? 'dark' : 'light'}`}>
-      <ElNavBar dark={dark} setDark={setDark} />
-      <React.StrictMode>
-        <RouterProvider router={router} />
-      </React.StrictMode>
-    </div>
-  );
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <TopBar ColorModeContext={ColorModeContext} />
+        <div className='flex flex-row'>
+          <div className='flex-1'>
+            <Box sx={{ width: '100%', typography: 'body1' }}>
+              <TabContext value={"0"}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList>
+                    <Tab label="Mapa" value="0" />
+                  </TabList>
+                </Box>
+                <TabPanel value="0">
+                  <Home center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
+              </TabContext>
+            </Box>
+          </div>
+          <div className='flex-1'>
+            <Box sx={{ width: '100%', typography: 'body1' }}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                    <Tab label="Buscas" value="1" />
+                    <Tab label="Superficial" value="2" />
+                    <Tab label="Subterrâneo" value="3" />
+                  </TabList>
+                </Box>
+                <TabPanel value="1">Item One</TabPanel>
+                <TabPanel value="2">Item Two</TabPanel>
+                <TabPanel value="3">Item Three</TabPanel>
+              </TabContext>
+            </Box>
+          </div>
+        </div>
+        <div>
+          <CollapsibleTable /></div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  )
 }
 
-export default App;

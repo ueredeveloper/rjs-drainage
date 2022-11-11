@@ -3,9 +3,9 @@
     "src/App.js": [
       {
         "id": "b8e08a5d-3090-47ea-bf26-a94194fc150c",
-        "line": 132,
-        "version": 1502,
-        "index": 3518
+        "line": 1,
+        "version": 4211,
+        "index": 0
       }
     ],
     "src/content/subterraneo.js": [
@@ -14,6 +14,28 @@
         "line": 1,
         "version": 57,
         "index": 0
+      }
+    ],
+    "src/header/navigation-bar.js": [
+      {
+        "id": "c03b661f-ba1a-4841-8494-8ad83bd3f3bd",
+        "line": 1,
+        "version": 284,
+        "index": 0
+      },
+      {
+        "id": "d8f94ba7-d234-4591-88cd-7f9f684adbd6",
+        "line": 1,
+        "version": 284,
+        "index": 0
+      }
+    ],
+    "src/map/el-map.js": [
+      {
+        "id": "21b36d0c-abf6-436c-a458-03e720b4de9d",
+        "line": 23,
+        "version": 1253,
+        "index": 402
       }
     ]
   }

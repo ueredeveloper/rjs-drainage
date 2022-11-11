@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-const ElDrawManager = ({ map, data, setData }) => {
+const ElDrawManager = ({ map, setData }) => {
 
   useEffect(() => {
-
-    console.log(data)
-
-    const draw = new google.maps.drawing.DrawingManager({
+    const drawingManager = new google.maps.drawing.DrawingManager({
       drawingMode: google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
@@ -20,7 +17,7 @@ const ElDrawManager = ({ map, data, setData }) => {
         ],
       },
       markerOptions: {
-       // icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+        // icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
       },
       circleOptions: {
         fillColor: "#ffff00",
@@ -31,10 +28,41 @@ const ElDrawManager = ({ map, data, setData }) => {
         zIndex: 1,
       },
     });
-    draw.setMap(map);
-    setData(prev=> {
-      return [...prev, draw]
-    })
+
+    window.google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+      if (event.type == 'marker') {
+        setData(prev => {
+          return { ...prev, markers: [...prev.markers, event.overlay] }
+        });
+      }
+      if (event.type == 'circle') {
+        var radius = event.overlay.getRadius();
+        setData(prev => {
+          return { ...prev, circles: [...prev.circles, event.overlay] }
+        });
+      }
+      if (event.type == 'polygon') {
+
+        setData(prev => {
+          return { ...prev, polygons: [...prev.polygons, event.overlay] }
+        });
+      }
+      if (event.type == 'polyline') {
+
+        setData(prev => {
+          return { ...prev, polylines: [...prev.polylines, event.overlay] }
+        });
+      }
+      if (event.type == 'rectangle') {
+
+        setData(prev => {
+          return { ...prev, rectangles: [...prev.rectangles, event.overlay] }
+        });
+      }
+    });
+
+    drawingManager.setMap(map);
+
   }, [map]);
 
   return null;

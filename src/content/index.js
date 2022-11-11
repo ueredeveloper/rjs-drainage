@@ -1,6 +1,8 @@
-import ElNavBar from './el-nav-bar';
 import Home from './home';
 import Superficial from './superficial';
 import Subterraneo from './subterraneo';
+import CollapsibleTable from './collapsible-table';
 
-export {Home, ElNavBar, Superficial, Subterraneo } 
+
+
+export { Home, Superficial, Subterraneo, CollapsibleTable } 
