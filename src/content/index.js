@@ -1,8 +1,5 @@
-import Home from './home';
-import Superficial from './superficial';
-import Subterraneo from './subterraneo';
+import Mapa from './mapa';
 import CollapsibleTable from './collapsible-table';
+import ElLineChartJs from './el-line-chart';
 
-
-
-export { Home, Superficial, Subterraneo, CollapsibleTable } 
+export { Mapa, CollapsibleTable, ElLineChartJs} 

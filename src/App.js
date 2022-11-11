@@ -11,7 +11,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
-import { Home, CollapsibleTable } from './content';
+import { Mapa, CollapsibleTable, ElLineChartJs } from './content';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
@@ -80,9 +80,12 @@ export default function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
+        {/* BARRA SUPERIOR - LOGO - LOGIN - ICONE DARK MAP*/}
         <TopBar ColorModeContext={ColorModeContext} />
-        <div className='flex flex-row'>
-          <div className='flex-1'>
+
+        <div className='flex flex-wrap'>
+          {/* MAPA */}
+          <div className='flex-1 min-w[200px]'>
             <Box sx={{ width: '100%', typography: 'body1' }}>
               <TabContext value={"0"}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -91,11 +94,12 @@ export default function App() {
                   </TabList>
                 </Box>
                 <TabPanel value="0">
-                  <Home mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
+                  <Mapa mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
               </TabContext>
             </Box>
           </div>
-          <div className='flex-1'>
+          {/* TAB PANES (BUSCAR, SUPERFICIAL SUBTERÂNEO */}
+          <div className='flex-1 min-w[200px]'>
             <Box sx={{ width: '100%', typography: 'body1' }}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -105,14 +109,18 @@ export default function App() {
                     <Tab label="Subterrâneo" value="3" />
                   </TabList>
                 </Box>
-                <TabPanel value="1">Item One</TabPanel>
+                <TabPanel value="1">
+                  <ElLineChartJs />
+                </TabPanel>
                 <TabPanel value="2">Item Two</TabPanel>
                 <TabPanel value="3">Item Three</TabPanel>
               </TabContext>
             </Box>
           </div>
         </div>
+        {/* TABELAS */}
         <div>
+
           <CollapsibleTable /></div>
       </ThemeProvider>
     </ColorModeContext.Provider>

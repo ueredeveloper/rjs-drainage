@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { ElMap, ElDrawManager } from '../map';
+import { ElMap, ElDrawManager } from './map';
 
-function Home({ mode, center, zoom, onClick, map, setMap, data, setData }) {
+function Mapa({ mode, center, zoom, onClick, map, setMap, data, setData }) {
 
   return (
     <div>
@@ -16,4 +16,4 @@ function Home({ mode, center, zoom, onClick, map, setMap, data, setData }) {
   )
 }
 
-export default Home;
+export default Mapa;

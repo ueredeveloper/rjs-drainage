@@ -8,12 +8,34 @@
 cores
 [image color picker](https://imagecolorpicker.com/)
 
-1 - Responsividade
+[react chart - 2 - example](https://codesandbox.io/s/vlhbl?file=/src/components/CustomCharts.js:424-425)
 
-Para desktop o mapa fica do lado esquerdo e as tabs do lado direito. No tamanho de celular o mapa fica acima e as tabs (Mapa, Superficial e Subterrâneo) ficam abaixo do mapa.
+## Evolução
+- Responsividade
 
-A tabela com a lista de outorgas fica abaixo do mapa e tabs.
+  - Para desktop o mapa fica do lado esquerdo e as tabs (busca, superficial, subterrâneo) do lado direito. No tamanho de celular o mapa fica acima e as tabs (Mapa, Superficial e Subterrâneo) ficam abaixo do mapa. <br><br>
+  
+  - Desktop
+    - A tabela de outorgas fica abaixo aos items mapa e tabs, que estão lado a lado:
+  
+  |mapa |<table><tr><th>Buscar</th><th>Superficial</th><th>Subterrâneo</th></tr></table>|
+  | ------ | --------------------------------------|
+  | <table><tr ><th colspan="2">tabela</th></tr></table>    |
+  | -----------------------------------------------|
+  
+  - Celular
+    - A tabela com a lista de outorgas fica abaixo aos items mapa e tabs que estão um abaixo do outro: <br><br>
+    
+  | mapa |
+  |----- |
 
-2 - Modo Norturno
-Salvar a escolha no navegador
+<table><tr><th>Buscar</th><th>Superficial</th><th>Subterrâneo</th></tr></table>   
+
+<table><tr><th>tabela</th></tr></table> 
+  
+
+- Modo Noturno
+    - Salvar a escolha no navegador
+    - O texto das tabs está sumindo no modo noturno
+
 
