@@ -31,10 +31,11 @@ export default function ElLineChartJs() {
     labels: ["Boston", "Worcester", "Springfield", "Lowel", "Cambridge"],
     datasets: [
       {
+        fill: false,
         label: "Population",
         data: [117594, 181455, 153060, 106519, 105162],
         borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgb(255, 99, 132)',
 
       }
     ]
@@ -43,8 +44,10 @@ export default function ElLineChartJs() {
   return (
     <>
       <Line
+        className="max-w-full max-h-[10rem]"
         data={chartData}
         options={{
+          responsive: true,
           maintainAspectRatio: true,
           title: {
             display: true,
