@@ -1,7 +1,5 @@
 # RJS - Drainage
 
-
-
 ### Temas estudados: 
 [jellywp](https://jellywp.com/wp/wesper6/home-page-3/#)
 
@@ -16,4 +14,6 @@ Para desktop o mapa fica do lado esquerdo e as tabs do lado direito. No tamanho 
 
 A tabela com a lista de outorgas fica abaixo do mapa e tabs.
 
-2 - 
+2 - Modo Norturno
+Salvar a escolha no navegador
+

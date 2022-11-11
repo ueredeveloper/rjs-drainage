@@ -91,7 +91,7 @@ export default function App() {
                   </TabList>
                 </Box>
                 <TabPanel value="0">
-                  <Home center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
+                  <Home mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
               </TabContext>
             </Box>
           </div>
