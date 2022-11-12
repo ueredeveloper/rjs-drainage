@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import {createCircle} from '../tools';
 /**
 * Adiciona marcador, círculo, polígono, poliline e retângulo ao mapa.
   * @param {Object} map Map inicializado gmaps api.
@@ -26,8 +27,8 @@ const ElDrawManager = ({ map, setData }) => {
       },
       circleOptions: {
         fillColor: "#ffff00",
-        fillOpacity: 1,
-        strokeWeight: 5,
+        fillOpacity: 0.2,
+        strokeWeight: 1,
         clickable: false,
         editable: true,
         zIndex: 1,
@@ -41,9 +42,11 @@ const ElDrawManager = ({ map, setData }) => {
         });
       }
       if (event.type == 'circle') {
-        var radius = event.overlay.getRadius();
         setData(prev => {
-          return { ...prev, geral: { ...prev.geral, circles: [...prev.geral.circles, event.overlay] } }
+          let _center = { lat: event.overlay.getCenter().lat(), lng: event.overlay.getCenter().lng() }
+          let _radius = event.overlay.getRadius();
+          let _circle = createCircle(_center, _radius);
+          return { ...prev, geral: { ...prev.geral, circles: [...prev.geral.circles, { center: _center, radius: _radius, circle: _circle }] } }
         });
       }
       if (event.type == 'polygon') {

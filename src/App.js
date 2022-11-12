@@ -12,7 +12,7 @@ import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
 import { Mapa, CollapsibleTable, ElLineChartJs } from './content';
-import {gmapsToArcGis} from './content/tools';
+import { gmapsToArcGis } from './content/tools';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
@@ -76,14 +76,7 @@ export default function App() {
     }
   });
 
-  useEffect(() => {
-
-    data.geral.polygons.forEach(polygon=>{
-       let arcgis = gmapsToArcGis(polygon);
-       console.log(arcgis)
-    })
-   
-  }, [data]);
+  
 
   function onClick() {
     console.log('on click')
