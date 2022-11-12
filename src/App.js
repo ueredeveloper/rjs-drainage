@@ -12,6 +12,7 @@ import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
 import { Mapa, CollapsibleTable, ElLineChartJs } from './content';
+import {gmapsToArcGis} from './content/tools';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
@@ -56,15 +57,32 @@ export default function App() {
   const zoom = 10;
 
   const [data, setData] = useState({
-    markers: [],
-    circles: [],
-    polygons: [],
-    polylines: [],
-    rectangles: []
+    geral: {
+      markers: [],
+      circles: [],
+      polygons: [],
+      polylines: [],
+      rectangles: []
+    },
+    subterraneo: {
+      markers: [],
+      polygons: [],
+      polylines: [],
+    },
+    superficial: {
+      markers: [],
+      polygons: [],
+      polylines: [],
+    }
   });
 
   useEffect(() => {
-    console.log(data)
+
+    data.geral.polygons.forEach(polygon=>{
+       let arcgis = gmapsToArcGis(polygon);
+       console.log(arcgis)
+    })
+   
   }, [data]);
 
   function onClick() {
@@ -94,7 +112,7 @@ export default function App() {
                   </TabList>
                 </Box>
                 <TabPanel value="0">
-                  <Mapa mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
+                  <Mapa tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
               </TabContext>
             </Box>
           </div>
@@ -104,7 +122,7 @@ export default function App() {
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Buscas" value="1" />
+                    <Tab label="Geral" value="1" />
                     <Tab label="Superficial" value="2" />
                     <Tab label="Subterrâneo" value="3" />
                   </TabList>

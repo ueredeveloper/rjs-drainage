@@ -1,9 +1,14 @@
 import { useEffect } from 'react';
-
+/**
+* Adiciona marcador, círculo, polígono, poliline e retângulo ao mapa.
+  * @param {Object} map Map inicializado gmaps api.
+  * @param {function} setData Função de adição de objectos geométricos à variável `data`.
+  */
 const ElDrawManager = ({ map, setData }) => {
 
   useEffect(() => {
-    const drawingManager = new google.maps.drawing.DrawingManager({
+
+    let _draw = new google.maps.drawing.DrawingManager({
       drawingMode: google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
@@ -29,39 +34,37 @@ const ElDrawManager = ({ map, setData }) => {
       },
     });
 
-    window.google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+    window.google.maps.event.addListener(_draw, 'overlaycomplete', function(event) {
       if (event.type == 'marker') {
         setData(prev => {
-          return { ...prev, markers: [...prev.markers, event.overlay] }
+          return { ...prev, geral: { ...prev.geral, markers: [...prev.geral.markers, event.overlay] } }
         });
       }
       if (event.type == 'circle') {
         var radius = event.overlay.getRadius();
         setData(prev => {
-          return { ...prev, circles: [...prev.circles, event.overlay] }
+          return { ...prev, geral: { ...prev.geral, circles: [...prev.geral.circles, event.overlay] } }
         });
       }
       if (event.type == 'polygon') {
 
         setData(prev => {
-          return { ...prev, polygons: [...prev.polygons, event.overlay] }
+          return { ...prev, geral: { ...prev.geral, polygons: [...prev.geral.polygons, event.overlay.getPath().getArray()] } }
         });
       }
       if (event.type == 'polyline') {
 
         setData(prev => {
-          return { ...prev, polylines: [...prev.polylines, event.overlay] }
+          return { ...prev, geral: { ...prev.geral, polylines: [...prev.geral.polylines, event.overlay] } }
         });
       }
       if (event.type == 'rectangle') {
-
         setData(prev => {
-          return { ...prev, rectangles: [...prev.rectangles, event.overlay] }
+          return { ...prev, geral: { ...prev.geral, rectangles: [...prev.geral.rectangles, event.overlay] } }
         });
       }
     });
-
-    drawingManager.setMap(map);
+    _draw.setMap(map);
 
   }, [map]);
 
