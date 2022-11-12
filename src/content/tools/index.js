@@ -21,13 +21,14 @@ const gmapsToArcGis = (rings) => {
   buscas de outorgas no círculo
   * @param {object} center. Latitude e longitude do centro de um círculo.
   * @param {number} radius. Raio do circulo desenhado
-  * @return {array} Retorna um conjunto de coordenadas.
+  * @return {array} rings. Retorna polígono em formato circular.
   */
-function createCircle(center, radius) {
+function createCircleRings(center, radius) {
   let angle = { start: 0, end: 360 }
-  let paths = [];
+  let rings = [];
   let i = angle.start;
-  radius = radius/110000
+  // convert metros par km
+  radius = radius * 0.0000092
 
   while (i < angle.end) {
     let path = [
@@ -35,10 +36,10 @@ function createCircle(center, radius) {
       { lat: center.lat + (Math.sin(i * Math.PI / 180)) * radius, lng: center.lng + (Math.cos(i * Math.PI / 180)) * radius }
     ];
     // retirar a coordenada do centro, só importa a segunda de cada linha criada
-    paths.push(path[1]);
+    rings.push(path[1]);
     i++;
   }
-  return paths;
+  return rings;
 }
 
-export { gmapsToArcGis, createCircle }
+export { gmapsToArcGis, createCircleRings }

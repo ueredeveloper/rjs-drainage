@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 
 const ElPolilyne = ({ map, path }) => {
-
-  console.log(path)
-
   useEffect(() => {
     const polilyne = new google.maps.Polyline({
       path: path,
@@ -12,11 +9,9 @@ const ElPolilyne = ({ map, path }) => {
       strokeOpacity: 1.0,
       strokeWeight: 1,
     });
-
     polilyne.setMap(map);
   }, [map]);
 
   return null;
-
 };
 export default ElPolilyne;

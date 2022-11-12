@@ -12,6 +12,7 @@ function Mapa({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) 
           let arcgis = gmapsToArcGis(polygon);
           //    console.log(arcgis)
         });*/
+    console.log(data.geral.rectangles)
   }, [data]);
 
   return (
@@ -21,8 +22,8 @@ function Mapa({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) 
         {/* Desenhar círculos, polígonos etc */}
         <ElDrawManager map={map} tab={tab} data={data} setData={setData} />
         {
-          data.geral.circles.map(circle => {
-            return <ElPolilyne map={map} path={circle.circle} />
+          data.geral.circles.map((circle, i) => {
+            return <ElPolilyne key={i} map={map} path={circle.rings} />
           })
         }
       </Wrapper>

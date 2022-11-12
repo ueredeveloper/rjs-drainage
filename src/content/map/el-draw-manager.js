@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {createCircle} from '../tools';
+import { createCircleRings } from '../tools';
 /**
 * Adiciona marcador, círculo, polígono, poliline e retângulo ao mapa.
   * @param {Object} map Map inicializado gmaps api.
@@ -18,7 +18,6 @@ const ElDrawManager = ({ map, setData }) => {
           google.maps.drawing.OverlayType.MARKER,
           google.maps.drawing.OverlayType.CIRCLE,
           google.maps.drawing.OverlayType.POLYGON,
-          google.maps.drawing.OverlayType.POLYLINE,
           google.maps.drawing.OverlayType.RECTANGLE,
         ],
       },
@@ -45,25 +44,40 @@ const ElDrawManager = ({ map, setData }) => {
         setData(prev => {
           let _center = { lat: event.overlay.getCenter().lat(), lng: event.overlay.getCenter().lng() }
           let _radius = event.overlay.getRadius();
-          let _circle = createCircle(_center, _radius);
-          return { ...prev, geral: { ...prev.geral, circles: [...prev.geral.circles, { center: _center, radius: _radius, circle: _circle }] } }
+          let _rings = createCircleRings(_center, _radius);
+          return { ...prev, geral: { ...prev.geral, circles: [...prev.geral.circles, { center: _center, radius: _radius, rings: _rings }] } }
         });
       }
       if (event.type == 'polygon') {
-
+        // retorna array de coordenada no formato gmaps, ex: [{lat: -15, lng: -47}, ...]
         setData(prev => {
-          return { ...prev, geral: { ...prev.geral, polygons: [...prev.geral.polygons, event.overlay.getPath().getArray()] } }
-        });
-      }
-      if (event.type == 'polyline') {
-
-        setData(prev => {
-          return { ...prev, geral: { ...prev.geral, polylines: [...prev.geral.polylines, event.overlay] } }
+          return {
+            ...prev, geral: {
+              ...prev.geral, polygons: [...prev.geral.polygons, {
+                rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } })
+              }]
+            }
+          }
         });
       }
       if (event.type == 'rectangle') {
+        let json = event.overlay.getBounds().toJSON();
+        let _rings = [
+          { lat: json.north, lng: json.east },
+          { lat: json.south, lng: json.east },
+          { lat: json.south, lng: json.west },
+          { lat: json.north, lng: json.west },
+          // fechar o polígono, repete a primeira coordenada
+          { lat: json.north, lng: json.east },
+        ]
         setData(prev => {
-          return { ...prev, geral: { ...prev.geral, rectangles: [...prev.geral.rectangles, event.overlay] } }
+          return {
+            ...prev, geral: {
+              ...prev.geral, rectangles: [...prev.geral.rectangles, {
+                rings: _rings
+              }]
+            }
+          }
         });
       }
     });

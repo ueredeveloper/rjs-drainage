@@ -61,7 +61,6 @@ export default function App() {
       markers: [],
       circles: [],
       polygons: [],
-      polylines: [],
       rectangles: []
     },
     subterraneo: {
