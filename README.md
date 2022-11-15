@@ -1,14 +1,5 @@
 # RJS - Drainage
 
-### Temas estudados: 
-[jellywp](https://jellywp.com/wp/wesper6/home-page-3/#)
-
-[city book](http://preview.themeforest.net/item/citybook-directory-listing-template/full_screen_preview/21360333)
-
-cores
-[image color picker](https://imagecolorpicker.com/)
-
-[react chart - 2 - example](https://codesandbox.io/s/vlhbl?file=/src/components/CustomCharts.js:424-425)
 
 ## Evolução
 - Responsividade
@@ -39,3 +30,18 @@ cores
     - O texto das tabs está sumindo no modo noturno
 
 
+
+
+
+### Temas estudados: 
+[jellywp](https://jellywp.com/wp/wesper6/home-page-3/#)
+
+[city book](http://preview.themeforest.net/item/citybook-directory-listing-template/full_screen_preview/21360333)
+
+#### cores
+[image color picker](https://imagecolorpicker.com/)
+
+[react chart - 2 - example](https://codesandbox.io/s/vlhbl?file=/src/components/CustomCharts.js:424-425)
+
+#### react - material - tailwind
+[material ui com tailwind](https://www.youtube.com/watch?v=QQIfuMlA6TI)

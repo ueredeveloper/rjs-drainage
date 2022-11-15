@@ -44,6 +44,7 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        {/* icon down up*/}
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -53,6 +54,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        {/*infos */}
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
@@ -65,10 +67,12 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
+              {/* Detalhes - Título */}
               <Typography variant="h6" gutterBottom component="div">
                 History
               </Typography>
               <Table size="small" aria-label="purchases">
+                {/* th - table head */}
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
@@ -77,6 +81,7 @@ function Row(props) {
                     <TableCell align="right">Total price ($)</TableCell>
                   </TableRow>
                 </TableHead>
+                {/*tbody - table body */}
                 <TableBody>
                   {row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>

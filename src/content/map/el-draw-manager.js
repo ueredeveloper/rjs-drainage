@@ -60,6 +60,8 @@ const ElDrawManager = ({ map, setData }) => {
           }
         });
       }
+      /* Criação de um polígono a partir de um retângulo gmaps api
+      */
       if (event.type == 'rectangle') {
         let json = event.overlay.getBounds().toJSON();
         let _rings = [

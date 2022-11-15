@@ -17,11 +17,10 @@ const gmapsToArcGis = (rings) => {
   return arcGis;
 }
 /**
-  * Criar linhas para cada ângulo do círculo e assim construir um polígono circular para
-  buscas de outorgas no círculo
+  * Criar linhas para cada ângulo do círculo (0 a 360º) e assim construir um polígono em formato circular para buscas de outorgas.
   * @param {object} center. Latitude e longitude do centro de um círculo.
   * @param {number} radius. Raio do circulo desenhado
-  * @return {array} rings. Retorna polígono em formato circular.
+  * @return {array} rings. Retorna polígono em formato de círculo.
   */
 function createCircleRings(center, radius) {
   let angle = { start: 0, end: 360 }

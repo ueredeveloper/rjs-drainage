@@ -11,7 +11,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
-import { Mapa, CollapsibleTable, ElLineChartJs } from './content';
+import { Mapa, CollapsibleTable, ElLineChartJs, ElLatLng } from './content';
 import { gmapsToArcGis } from './content/tools';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
@@ -57,6 +57,7 @@ export default function App() {
   const zoom = 10;
 
   const [data, setData] = useState({
+    latlng: { lat: -15.123456, lng: -47.123456 },
     geral: {
       markers: [],
       circles: [],
@@ -73,9 +74,8 @@ export default function App() {
       polygons: [],
       polylines: [],
     }
-  });
 
-  
+  });
 
   function onClick() {
     console.log('on click')
@@ -120,6 +120,7 @@ export default function App() {
                   </TabList>
                 </Box>
                 <TabPanel value="1">
+                  <ElLatLng data={data} setData={setData} />
                   <ElLineChartJs />
                 </TabPanel>
                 <TabPanel value="2">Item Two</TabPanel>
