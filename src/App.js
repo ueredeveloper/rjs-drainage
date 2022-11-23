@@ -11,7 +11,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
-import { Mapa, CollapsibleTable, ElLineChartJs, ElLatLng } from './content';
+import { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng } from './content';
 import { gmapsToArcGis } from './content/tools';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
@@ -88,53 +88,7 @@ export default function App() {
   };
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        {/* BARRA SUPERIOR - LOGO - LOGIN - ICONE DARK MAP*/}
-        <TopBar ColorModeContext={ColorModeContext} />
-
-        <div className='flex flex-wrap'>
-          {/* MAPA */}
-          <div className='flex-1 min-w[200px]'>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={"0"}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList>
-                    <Tab label="Mapa" value="0" />
-                  </TabList>
-                </Box>
-                <TabPanel value="0">
-                  <Mapa tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
-              </TabContext>
-            </Box>
-          </div>
-          {/* TAB PANES (BUSCAR, SUPERFICIAL SUBTERÂNEO */}
-          <div className='flex-1 min-w[200px]'>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Geral" value="1" />
-                    <Tab label="Superficial" value="2" />
-                    <Tab label="Subterrâneo" value="3" />
-                  </TabList>
-                </Box>
-                <TabPanel value="1">
-                  <ElLatLng data={data} setData={setData} />
-                  <ElLineChartJs />
-                </TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-              </TabContext>
-            </Box>
-          </div>
-        </div>
-        {/* TABELAS */}
-        <div>
-
-          <CollapsibleTable /></div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+   <ElLatLng data={data} setData={setData} />
   )
 }
 

@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
 
 * {
-  outline: 1px solid #800
+  outline: 1px solid #800;
+  border: 0.1px solid;
 }
-*/
+
 
 
 

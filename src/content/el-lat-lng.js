@@ -27,7 +27,7 @@ function ElLatLng({ data, setData }) {
     })
   }
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row'}}
+    <Box sx={{ display: 'flex', flexFlow: 'row wrap' }}
     >
       {/* entradas latitude e longitude */}
       <Box sx={{ display: 'flex', flex: 4, flexDirection: 'row' }}>
@@ -50,7 +50,6 @@ function ElLatLng({ data, setData }) {
             flexGrow: 1,
 
           }}
-          fullwidth
           label="Longitude"
           name="lng"
           value={data.latlng.lng}
@@ -59,9 +58,9 @@ function ElLatLng({ data, setData }) {
         />
       </Box>
       {/* botôes de manipulação */}
-      <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center'}}>
+      <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
         <IconButton size="large">
-          <SearchIcon/>
+          <SearchIcon />
         </IconButton>
         <IconButton size="large">
           <ContentCopyIcon />

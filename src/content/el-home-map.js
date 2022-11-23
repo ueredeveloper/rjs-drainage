@@ -3,7 +3,7 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 import { ElMap, ElDrawManager } from './map';
 import ElPolilyne from './map/el-polilyne';
 
-function Mapa({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) {
+function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) {
 
   const [path, setPath] = useState([])
   
@@ -23,4 +23,4 @@ function Mapa({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) 
   )
 }
 
-export default Mapa;
+export default ElHomeMap;
