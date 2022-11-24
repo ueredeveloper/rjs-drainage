@@ -1,10 +1,7 @@
-import React, { useEffect, useState, useMemo, createContext, useContext } from 'react';
+import React, { useState, useMemo, createContext } from 'react';
 // material ui
-import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -12,7 +9,6 @@ import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
 import { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng } from './content';
-import { gmapsToArcGis } from './content/tools';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
