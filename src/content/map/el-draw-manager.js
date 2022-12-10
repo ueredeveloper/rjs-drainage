@@ -47,22 +47,21 @@ const ElDrawManager = ({ map, setData }) => {
             ...prev,
             overlays: {
               ...prev.overlays,
-              marker: { id: id, tp_id: null, int_shape: { coordinates: [position.lng(), position.lat()] } }
+              marker: {
+                id: id,
+                info: { tp_id: null },
+                position: { lat: position.lat(), lng: position.lng() }
+              }
             }
           }
         });
         // retirar o marcador do mapa depois de capturar a coordenada
         event.overlay.setMap(null)
 
-        /*
-        setData(prev => {
-          return { ...prev, overlays: { ...prev.overlays, markers: [...prev.overlays.markers, {id: id, latlng: event.overlay}] } }
-        });
-        */
       }
       if (event.type === 'circle') {
         let { center, radius } = event.overlay;
-        let markers = await findPointsInsideCircle(
+        let points = await findPointsInsideCircle(
           {
             center: { lng: center.lng(), lat: center.lat() },
             radius: parseInt(radius)
@@ -78,7 +77,10 @@ const ElDrawManager = ({ map, setData }) => {
               circles: [
                 ...prev.overlays.circles, { id: id, center: center, radius: radius }],
               markers: [
-                ...prev.overlays.markers, { id: id, markers }]
+                ...prev.overlays.markers, {
+                  id: id,
+                  points: points
+                }]
             },
           }
         });
@@ -91,7 +93,7 @@ const ElDrawManager = ({ map, setData }) => {
         });
 
         polygon = [...polygon, polygon[0]]
-        let markers = await findPointsInsidePolygon(polygon);
+        let points = await findPointsInsidePolygon(polygon);
         let id = Date.now();
         setData(prev => {
           return {
@@ -105,9 +107,8 @@ const ElDrawManager = ({ map, setData }) => {
               markers: [
                 ...prev.overlays.markers, {
                   id: id,
-                  markers
-                }
-              ]
+                  points: points
+                }]
             },
           }
         });
@@ -127,7 +128,7 @@ const ElDrawManager = ({ map, setData }) => {
          * @returns {array[]} Interferencias outorgadas.
        */
         let rectangle = { nex: NE.lng(), ney: NE.lat(), swx: SW.lng(), swy: SW.lat() }
-        let markers = await findPointsInsideRectangle(rectangle);
+        let points = await findPointsInsideRectangle(rectangle);
         let id = Date.now();
         setData(prev => {
           return {
@@ -138,9 +139,8 @@ const ElDrawManager = ({ map, setData }) => {
               markers: [
                 ...prev.overlays.markers, {
                   id: id,
-                  markers
-                }
-              ]
+                  points: points
+                }]
             },
           }
         });

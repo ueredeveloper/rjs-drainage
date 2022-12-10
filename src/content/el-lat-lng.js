@@ -19,6 +19,13 @@ function ElLatLng({ data, setData }) {
 
   const handleChange = (e) => {
     let { name, value } = e.target;
+    // testando a retirada de todos os pontos do mapa
+    setData(prev=>{
+      return {
+        ...prev,
+        overlays: {...prev.overlays, markers: []}
+      }
+    })
     /*
     setData(prev => {
       return {

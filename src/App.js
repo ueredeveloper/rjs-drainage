@@ -56,7 +56,11 @@ export default function App() {
 
   const [data, setData] = useState({
     overlays: {
-      marker: {id: null, tp_id: null, int_shape: { coordinates: [-47.9402802,-15.7749874]}},
+      marker: {
+        id: null, tp_id: null,
+        info: { int_shape: { coordinates: [-47.9402802, -15.7749874] } },
+        position: { lat: -15.7749874, lng: -47.9402802 }
+      },
       markers: [],
       circles: [],
       polygons: [],
@@ -65,7 +69,7 @@ export default function App() {
   });
 
   useEffect(() => {
-    console.log(data)
+    console.log(JSON.stringify(data.overlays))
   }, [data])
 
   function onClick() {

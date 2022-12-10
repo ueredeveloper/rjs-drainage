@@ -19,12 +19,21 @@ function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setDat
         {
           data.overlays.markers.map(markers => {
 
-            return markers.markers.map((marker, ii) => {
-              return <ElMarker key={ii} marker={marker} map={map} />
+            return markers.points.map((info, ii) => {
+              // coordenadas da outorga em formato geometry
+              let [x, y] = info.int_shape.coordinates;
+              return (
+                <ElMarker
+                  key={ii}
+                  info={info}
+                  // coordenada em formato gmaps
+                  options={{ position: { lat: y, lng: x }, map: map }} />)
             })
           })
         }
-        <ElMarker marker={data.overlays.marker} map={map} />
+        <ElMarker
+          info={data.overlays.marker}
+          options={{ position: data.overlays.marker.position, map: map }} />
       </Wrapper>
     </div>
   )

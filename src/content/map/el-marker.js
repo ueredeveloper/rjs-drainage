@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const ElMarker = ({ marker, map }) => {
+const ElMarker = ({ info, options }) => {
+
+  const [marker, setMarker] = useState();
   /**
   * Setar o ícone do marcador.
     * @param {integer} tp_id Tipo do poço, tp_id = 1, poço manual - verde, tp_id = 2, poço tubular - azul. Se nulo, é um ponto clicado pelo usuário.
@@ -17,24 +19,25 @@ const ElMarker = ({ marker, map }) => {
 
   useEffect(() => {
 
-    if (marker) {
-      //int_shape: coordinates: [0: -47.71305510399998 1: -15.826772622999954]
-      let coord = marker.int_shape.coordinates;
-      // coordenadas gmaps -> {lat: ..., lng: ...}
-      let latlng = { lat: coord[1], lng: coord[0] }
+    console.log(info.tp_id)
 
-      let _marker = new window.google.maps.Marker({
-        position: latlng,
-        icon: setIcon(marker.tp_id),
-        map: map,
-        title: "Hello World!",
-      });
-
-      _marker.setMap(map);
+    if (!marker) {
+      setMarker(new window.google.maps.Marker());
     }
+    // remove marker from map on unmount
+    return () => {
+      if (marker) {
+        marker.setMap(null);
+      }
+    };
+  }, [marker]);
 
-  }, [map, marker]);
-
+  useEffect(()=>{
+    
+  }, [marker, options, info])
+if (marker) {
+      marker.setOptions({...options, icon: setIcon(info.tp_id)});
+    }
   return null;
 
 };
