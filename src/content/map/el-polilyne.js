@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 const ElPolilyne = ({ map, path }) => {
+  
   useEffect(() => {
     const polilyne = new google.maps.Polyline({
       path: path,

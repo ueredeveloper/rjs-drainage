@@ -55,7 +55,7 @@ export default function App() {
   const [data, setData] = useState({
     latlng: { lat: -15.123456, lng: -47.123456 },
     geral: {
-      markers: [],
+      markers: [{ id: null, markers: [] }],
       circles: [],
       polygons: [],
       rectangles: []

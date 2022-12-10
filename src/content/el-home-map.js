@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { ElMap, ElDrawManager } from './map';
-import ElPolilyne from './map/el-polilyne';
+import { ElMap, ElDrawManager, ElMarker } from './map';
 
 function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) {
 
-  const [path, setPath] = useState([])
-  
   return (
     <div>
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
@@ -18,6 +15,15 @@ function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setDat
             return <ElPolilyne key={i} map={map} path={circle.rings} />
           })
         */}
+        {/*marcadores*/}
+        {
+          data.geral.markers.map(markers => {
+
+            return markers.markers.map((marker, ii) => {
+              return <ElMarker key={ii} marker={marker} map={map} />
+            })
+          })
+        }
       </Wrapper>
     </div>
   )
