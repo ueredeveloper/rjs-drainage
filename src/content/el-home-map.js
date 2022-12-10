@@ -11,19 +11,20 @@ function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setDat
         {/* Desenhar círculos, polígonos etc */}
         <ElDrawManager map={map} tab={tab} data={data} setData={setData} />
         {/*
-          data.geral.circles.map((circle, i) => {
+          data.overlays.circles.map((circle, i) => {
             return <ElPolilyne key={i} map={map} path={circle.rings} />
           })
         */}
         {/*marcadores*/}
         {
-          data.geral.markers.map(markers => {
+          data.overlays.markers.map(markers => {
 
             return markers.markers.map((marker, ii) => {
               return <ElMarker key={ii} marker={marker} map={map} />
             })
           })
         }
+        <ElMarker marker={data.overlays.marker} map={map} />
       </Wrapper>
     </div>
   )

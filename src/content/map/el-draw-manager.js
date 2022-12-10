@@ -11,7 +11,7 @@ const ElDrawManager = ({ map, setData }) => {
   useEffect(() => {
 
     let _draw = new window.google.maps.drawing.DrawingManager({
-      drawingMode: window.google.maps.drawing.OverlayType.CIRCLE,
+      drawingMode: window.google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
         position: window.google.maps.ControlPosition.TOP_CENTER,
@@ -37,9 +37,28 @@ const ElDrawManager = ({ map, setData }) => {
 
     window.google.maps.event.addListener(_draw, 'overlaycomplete', async function(event) {
       if (event.type === 'marker') {
+        let position = event.overlay.position
+
+        //int_shape: coordinates: [0: -47.71305510399998 1: -15.826772622999954]
+        //tp_id = null
+        let id = Date.now();
         setData(prev => {
-          return { ...prev, geral: { ...prev.geral, markers: [...prev.geral.markers, event.overlay] } }
+          return {
+            ...prev,
+            overlays: {
+              ...prev.overlays,
+              marker: { id: id, tp_id: null, int_shape: { coordinates: [position.lng(), position.lat()] } }
+            }
+          }
         });
+        // retirar o marcador do mapa depois de capturar a coordenada
+        event.overlay.setMap(null)
+
+        /*
+        setData(prev => {
+          return { ...prev, overlays: { ...prev.overlays, markers: [...prev.overlays.markers, {id: id, latlng: event.overlay}] } }
+        });
+        */
       }
       if (event.type === 'circle') {
         let { center, radius } = event.overlay;
@@ -54,12 +73,12 @@ const ElDrawManager = ({ map, setData }) => {
         setData(prev => {
           return {
             ...prev,
-            geral: {
-              ...prev.geral,
+            overlays: {
+              ...prev.overlays,
               circles: [
-                ...prev.geral.circles, { id: id, center: center, radius: radius }],
+                ...prev.overlays.circles, { id: id, center: center, radius: radius }],
               markers: [
-                ...prev.geral.markers, { id: id, markers }]
+                ...prev.overlays.markers, { id: id, markers }]
             },
           }
         });
@@ -72,20 +91,19 @@ const ElDrawManager = ({ map, setData }) => {
         });
 
         polygon = [...polygon, polygon[0]]
-        let id = Date.now();
         let markers = await findPointsInsidePolygon(polygon);
-
+        let id = Date.now();
         setData(prev => {
           return {
             ...prev,
-            geral: {
-              ...prev.geral,
-              polygons: [...prev.geral.polygons, {
+            overlays: {
+              ...prev.overlays,
+              polygons: [...prev.overlays.polygons, {
                 id: id,
                 rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } })
               }],
               markers: [
-                ...prev.geral.markers, {
+                ...prev.overlays.markers, {
                   id: id,
                   markers
                 }
@@ -100,7 +118,6 @@ const ElDrawManager = ({ map, setData }) => {
         let bounds = event.overlay.getBounds();
         let NE = bounds.getNorthEast();
         let SW = bounds.getSouthWest();
-        let id = Date.now();
         /** SUPABASE
          * Buscar pontos em um retângulo
          * @param nex {float} Noroeste longitude
@@ -111,15 +128,15 @@ const ElDrawManager = ({ map, setData }) => {
        */
         let rectangle = { nex: NE.lng(), ney: NE.lat(), swx: SW.lng(), swy: SW.lat() }
         let markers = await findPointsInsideRectangle(rectangle);
-
+        let id = Date.now();
         setData(prev => {
           return {
             ...prev,
-            geral: {
-              ...prev.geral,
-              rectangles: [...prev.geral.rectangles, { id: id, ne: NE, sw: SW }],
+            overlays: {
+              ...prev.overlays,
+              rectangles: [...prev.overlays.rectangles, { id: id, ne: NE, sw: SW }],
               markers: [
-                ...prev.geral.markers, {
+                ...prev.overlays.markers, {
                   id: id,
                   markers
                 }

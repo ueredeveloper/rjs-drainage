@@ -19,12 +19,13 @@ function ElLatLng({ data, setData }) {
 
   const handleChange = (e) => {
     let { name, value } = e.target;
+    /*
     setData(prev => {
       return {
         ...prev,
         latlng: { ...prev.latlng, [name]: value }
       }
-    })
+    })*/
   }
   return (
     <Box sx={{ display: 'flex', flexFlow: 'row wrap' }}
@@ -39,7 +40,7 @@ function ElLatLng({ data, setData }) {
           }}
           label="Latitude"
           name="lat"
-          value={data.latlng.lat}
+         // value={data.latlng.lat}
           onChange={handleChange}
           size="small"
         />
@@ -52,7 +53,7 @@ function ElLatLng({ data, setData }) {
           }}
           label="Longitude"
           name="lng"
-          value={data.latlng.lng}
+         // value={data.latlng.lng}
           onChange={handleChange}
           size="small"
         />

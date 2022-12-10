@@ -1,4 +1,4 @@
-import React, { useState, useMemo, createContext } from 'react';
+import React, { useState, useEffect, useMemo, createContext } from 'react';
 // material ui
 import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -48,30 +48,25 @@ export default function App() {
     [mode],
   );
 
+
+
   const [map, setMap] = useState();
   const center = { lat: -15.794393510614238, lng: -47.670852661132805 };
   const zoom = 10;
 
   const [data, setData] = useState({
-    latlng: { lat: -15.123456, lng: -47.123456 },
-    geral: {
-      markers: [{ id: null, markers: [] }],
+    overlays: {
+      marker: {id: null, tp_id: null, int_shape: { coordinates: [-47.9402802,-15.7749874]}},
+      markers: [],
       circles: [],
       polygons: [],
       rectangles: []
-    },
-    subterraneo: {
-      markers: [],
-      polygons: [],
-      polylines: [],
-    },
-    superficial: {
-      markers: [],
-      polygons: [],
-      polylines: [],
     }
-
   });
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   function onClick() {
     console.log('on click')
