@@ -48,8 +48,6 @@ export default function App() {
     [mode],
   );
 
-
-
   const [map, setMap] = useState();
   const center = { lat: -15.794393510614238, lng: -47.670852661132805 };
   const zoom = 10;
@@ -57,8 +55,8 @@ export default function App() {
   const [data, setData] = useState({
     overlays: {
       marker: {
-        id: null, tp_id: null,
-        info: { int_shape: { coordinates: [-47.9402802, -15.7749874] } },
+        id: null,
+        info: { tp_id: null },
         position: { lat: -15.7749874, lng: -47.9402802 }
       },
       markers: [],
