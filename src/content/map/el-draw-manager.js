@@ -11,7 +11,7 @@ const ElDrawManager = ({ map, setData }) => {
   useEffect(() => {
 
     let _draw = new window.google.maps.drawing.DrawingManager({
-      drawingMode: window.google.maps.drawing.OverlayType.MARKER,
+      drawingMode: 'window.google.maps.drawing.OverlayType.CIRCLE',
       drawingControl: true,
       drawingControlOptions: {
         position: window.google.maps.ControlPosition.TOP_CENTER,
@@ -93,6 +93,7 @@ const ElDrawManager = ({ map, setData }) => {
         });
 
         polygon = [...polygon, polygon[0]]
+
         let points = await findPointsInsidePolygon(polygon);
         let id = Date.now();
         setData(prev => {

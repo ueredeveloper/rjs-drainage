@@ -1,7 +1,9 @@
-
+// mudar para https://njs-adasa-postgres.ueredeveloper.repl.co
 const url = 'https://adasa-postgres.ueredeveloper.repl.co';
 
 async function findPointsInsidePolygon(polygon) {
+
+  console.log(JSON.stringify(polygon))
   let points = await fetch(url + '/findPointsInsidePolygon', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

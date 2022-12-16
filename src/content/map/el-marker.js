@@ -18,9 +18,7 @@ const ElMarker = ({ info, options }) => {
   }
 
   useEffect(() => {
-
-    console.log(info.tp_id)
-
+    
     if (!marker) {
       setMarker(new window.google.maps.Marker());
     }
