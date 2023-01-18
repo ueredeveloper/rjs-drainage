@@ -1,8 +1,27 @@
 import React from 'react';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { ElMap, ElDrawManager, ElMarker } from './map';
-
+import { ElMap, ElDrawManager, ElMarker, ElPolygon } from './map';
+import ElMapControllers from './el-map-controllers'
+/**
+* Element Home Map
+*
+*/
 function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) {
+  /**
+  * Mudar estado dos botões checkbox e assim verificar se é para retirar ou adicionar shapes no mapa.
+  *
+  */
+  function setChecked(shape, checked) {
+    setData(prev => {
+      return {
+        ...prev,
+        shapes: {
+          ...prev.shapes, ...prev.shapes[shape].checked = checked
+        }
+      }
+    })
+
+  }
 
   return (
     <div>
@@ -31,10 +50,24 @@ function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setDat
             })
           })
         }
+        {/**
+        data ...
+        shapes: {
+          fraturado: {checked: false, shapes:[]},
+          poroso: {checked: false, shapes:[]}
+        }
+    */}
+        {data.shapes.fraturado.shapes.map(f => {
+          return (
+            <ElPolygon />
+          )
+        })}
         <ElMarker
           info={data.overlays.marker}
           options={{ position: data.overlays.marker.position, map: map }} />
+
       </Wrapper>
+      <ElMapControllers setChecked={setChecked} />
     </div>
   )
 }

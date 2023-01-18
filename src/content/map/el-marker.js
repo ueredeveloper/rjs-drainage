@@ -5,8 +5,8 @@ const ElMarker = ({ info, options }) => {
   const [marker, setMarker] = useState();
   /**
   * Setar o ícone do marcador.
-    * @param {integer} tp_id Tipo do poço, tp_id = 1, poço manual - verde, tp_id = 2, poço tubular - azul. Se nulo, é um ponto clicado pelo usuário.
-    */
+  * @param {integer} tp_id Tipo do poço, tp_id = 1, poço manual - verde, tp_id = 2, poço tubular - azul. Se nulo, é um ponto clicado pelo usuário.
+  */
   function setIcon(tp_id) {
     if (tp_id === 1) {
       return `https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`
@@ -18,7 +18,7 @@ const ElMarker = ({ info, options }) => {
   }
 
   useEffect(() => {
-    
+
     if (!marker) {
       setMarker(new window.google.maps.Marker());
     }
@@ -30,12 +30,12 @@ const ElMarker = ({ info, options }) => {
     };
   }, [marker]);
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+
   }, [marker, options, info])
-if (marker) {
-      marker.setOptions({...options, icon: setIcon(info.tp_id)});
-    }
+  if (marker) {
+    marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
+  }
   return null;
 
 };

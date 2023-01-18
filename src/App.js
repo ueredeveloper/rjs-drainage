@@ -63,6 +63,10 @@ export default function App() {
       circles: [],
       polygons: [],
       rectangles: []
+    },
+    shapes: {
+      fraturado: {checked: false, shapes:[1,2,5]},
+      poroso: {checked: false, shapes:[]}
     }
   });
 

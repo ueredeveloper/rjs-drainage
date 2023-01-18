@@ -13,7 +13,7 @@ function ElLatLng({ data, setData }) {
           let arcgis = gmapsToArcGis(polygon);
           //    console.log(arcgis)
         });*/
-    console.log(data)
+    console.log(data.shapes)
   }, [data]);
 
 

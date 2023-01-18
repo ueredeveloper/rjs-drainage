@@ -37,6 +37,33 @@ async function findPointsInsideRectangle(rectangle) {
 
   return points;
 }
+/**
+* Buscar a shape hidrogeo_fraturado no banco de dados
+*
+  */
+async function getFraturado() {
+  let _fraturado = await fetch(url + '/getFraturado', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  }).then(response => {
+    return response.json();
+  })
+
+  return _fraturado;
+}
+/**
+* Buscar a shape hidrogeo_poroso no banco de dados
+  */
+async function getPoroso() {
+  let _poroso = await fetch(url + '/getPoroso', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  }).then(response => {
+    return response.json();
+  })
+
+  return _poroso;
+}
 
 
-export {findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle}
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getFraturado, getPoroso }
