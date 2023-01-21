@@ -30,12 +30,11 @@ const ElMarker = ({ info, options }) => {
     };
   }, [marker]);
 
-  useEffect(() => {
-
-  }, [marker, options, info])
+  
   if (marker) {
     marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
   }
+  
   return null;
 
 };

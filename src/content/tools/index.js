@@ -40,5 +40,29 @@ function createCircleRings(center, radius) {
   }
   return rings;
 }
+/*
+*
+  *
+  */
+function converterPostgresToGmaps(shape) {
 
-export { gmapsToArcGis, createCircleRings }
+  if (shape.shape.type === 'MultiPolygon') {
+    
+    let _paths = shape.shape.coordinates.map(coord => {
+      return coord[0].map(c => {
+        return { lat: parseFloat(c[1]), lng: parseFloat(c[0]) }
+      })
+    })
+    return _paths
+  } else {
+
+    let _paths = shape.shape.coordinates.map(coord => {
+      return coord.map(c => {
+        return { lat: parseFloat(c[1]), lng: parseFloat(c[0]) }
+      })
+    })
+    return _paths
+  }
+}
+
+export { gmapsToArcGis, createCircleRings, converterPostgresToGmaps }

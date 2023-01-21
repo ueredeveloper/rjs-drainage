@@ -65,13 +65,13 @@ export default function App() {
       rectangles: []
     },
     shapes: {
-      fraturado: {checked: false, shapes:[1,2,5]},
-      poroso: {checked: false, shapes:[]}
+      fraturado: { checked: false, shapes: [] },
+      poroso: { checked: false, shapes: [] }
     }
   });
 
   useEffect(() => {
-    console.log(JSON.stringify(data.overlays.markers))
+    console.log(data.overlays.marker.position)
   }, [data])
 
   function onClick() {

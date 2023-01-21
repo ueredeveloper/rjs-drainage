@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import { converterPostgresToGmaps } from '../tools';
 
 /**
 * Elemento de Polígono gmaps api.
 *
 *
 */
-const ElPolygon = ({ info, options }) => {
+const ElPolygon = ({ shape, map }) => {
 
   const [polygon, setPolygon] = useState();
 
@@ -14,20 +15,33 @@ const ElPolygon = ({ info, options }) => {
     if (!polygon) {
       setPolygon(new window.google.maps.Polygon());
     }
-    // remove polígono do mapa - unmount
+    // remove marker from map on unmount
     return () => {
       if (polygon) {
         polygon.setMap(null);
       }
     };
-  }, [polygon]);
+  }, [polygon, setPolygon]);
 
-  useEffect(() => {
-
-  }, [polygon, options, info])
   if (polygon) {
-    polygon.setOptions({ ...options });
+    // cor aleatóra para o polígono
+    let color = Math.floor(Math.random() * 2 ** 24).toString(16).padStart(6, '0');
+    // converter postgres 
+    let paths = converterPostgresToGmaps(shape);
+
+    polygon.setOptions(
+      {
+        paths: paths,
+        strokeColor: '#' + color,
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: '#' + color,
+        fillOpacity: 0.35,
+        map: map
+      }
+    );
   }
+
   return null;
 
 };
