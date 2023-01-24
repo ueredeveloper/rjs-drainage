@@ -56,5 +56,26 @@ async function getShape(shape) {
   })
   return response;
 }
+/**
+* Através de uma coordenada buscar todos os pontos no sistema ao qual pertence a coordenada
+* @param lat Latitude
+*  @para lng Longitue
+*
+  */
+async function findPointsInASystem(lat, lng) {
 
-export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape }
+  let response = await fetch(url + `/findPointsInASystem?lat=${lat}&lng=${lng}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/JSON',
+      'Content-Type': 'application/JSON',
+    }
+
+  }).then(res => {
+    return res.json();
+  })
+  return response;
+}
+
+
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem }

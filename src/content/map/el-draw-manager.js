@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 //import { createCircleRings } from '../tools';
-import { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle } from '../../services';
+import { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, findPointsInASystem } from '../../services';
 /**
 * Adiciona marcador, círculo, polígono, poliline e retângulo ao mapa.
   * @param {Object} map Map inicializado gmaps api.
@@ -11,7 +11,7 @@ const ElDrawManager = ({ map, setData }) => {
   useEffect(() => {
 
     let _draw = new window.google.maps.drawing.DrawingManager({
-      drawingMode: 'window.google.maps.drawing.OverlayType.CIRCLE',
+      drawingMode: window.google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
         position: window.google.maps.ControlPosition.TOP_CENTER,
@@ -39,8 +39,8 @@ const ElDrawManager = ({ map, setData }) => {
       if (event.type === 'marker') {
         let position = event.overlay.position
 
-        //int_shape: coordinates: [0: -47.71305510399998 1: -15.826772622999954]
-        //tp_id = null
+        let points = await findPointsInASystem(position.lat(), position.lng());
+
         let id = Date.now();
         setData(prev => {
           return {
@@ -52,11 +52,12 @@ const ElDrawManager = ({ map, setData }) => {
                 info: { tp_id: null },
                 position: { lat: position.lat(), lng: position.lng() }
               }
-            }
+            },
+            system: {outorgas: points._outorgas, shp: points._shp}
           }
         });
         // retirar o marcador do mapa depois de capturar a coordenada
-        event.overlay.setMap(null)
+        event.overlay.setMap(null);
 
       }
       if (event.type === 'circle') {

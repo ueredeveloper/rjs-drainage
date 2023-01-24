@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { ElMap, ElDrawManager, ElMarker, ElPolygon } from './map';
+import { ElMap, ElDrawManager, ElMarker, ElPolygon, ElPolyline } from './map';
 import ElMapControllers from './el-map-controllers';
 import { getShape } from '../services';
+import { initialState } from '../App'
 //import { shape } from 'prop-types';
 /**
 * Element Home Map
 *
 */
 function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) {
+
   /**
   * Manter os polígonos para não precisar toda hora acessar o servidor, busca uma vez e salva nesta variável.
   */
@@ -31,22 +33,20 @@ function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setDat
       }
     })
   }
-    /**
-  * Limpar o mapa. Primeiramente testando com as shapes do fraturado, depois todos os elementos do mapa.
+  /**
+* Limpar o mapa. Primeiramente testando com as shapes do fraturado, depois todos os elementos do mapa.
 Ideia: Colocar uma variável global para não precisar toda hora buscar no bancho e um botão para limpar se preciso essa variável global, talvez no meu à esquerda um clear no fim das opções.
-  *
-  */
+*
+*/
   function setMapNull() {
+
     setData(prev => {
       return {
         ...prev,
-        shapes: {
-          // primeiramente somente o tubular
-          //fraturado:  { checked: false, shapes: [] },
-          ...prev.shapes,
-          ...prev.shapes.fraturado.checked = false,
-          ...prev.shapes.fraturado.shapes = []
-        }
+        overlays: initialState().overlays,
+        system: initialState().system,
+        shapes: initialState().shapes,
+
       }
     });
   }
@@ -55,7 +55,6 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
   * Setar os polígonos da shape do fraturado ou fraturado
   *
   */
-  
   function setPolygons(shape, polygons) {
     setData(prev => {
       return {
@@ -65,6 +64,26 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
         }
       }
     });
+
+  }
+  /** 
+  *  Mostrar o subsistema que foi pesquisado em formato de polilinhas.
+  *  @param {array} Shape do subsistema.
+  */
+  function renderPolyline(shape) {
+    
+    if (shape.type === 'MultiPolygon') {
+      return shape.coordinates.map((coord, i) => {
+        return coord.map((_coord, ii) => {
+          return (<ElPolyline key={ii} coord={_coord} map={map} />)
+        })
+      })
+    }
+    else {
+      return shape.coordinates.map((coord, i) => {
+        return (<ElPolyline  key={i}  coord={coord} map={map} />)
+      })
+    }
 
   }
 
@@ -88,7 +107,6 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
         })
       });
     } else if (checked && shapes.length === 0 && _shapes.fraturado.polygons.length > 0) {
-      console.log('else if')
       setPolygons('fraturado', _shapes.fraturado.polygons);
     }
 
@@ -126,6 +144,20 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
             })
           })
         }
+        {
+          data.system.outorgas.map((outorga, i) => {
+            let [x, y] = outorga.int_shape.coordinates;
+            return (
+              <ElMarker
+                key={i}
+                info={{ type: 3 }}
+                // coordenada em formato gmaps
+                options={{ position: { lat: y, lng: x }, map: map }} />)
+
+          })
+        }
+        {renderPolyline(data.system.shp)}
+
         {
           data.shapes.fraturado.shapes.map((shape, i) => {
             return (

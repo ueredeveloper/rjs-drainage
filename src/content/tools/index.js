@@ -46,15 +46,21 @@ function createCircleRings(center, radius) {
   */
 function converterPostgresToGmaps(shape) {
 
+  console.log(shape.shape.type)
+   shape.shape.coordinates.map(c=>{
+     console.log(c.length)
+   })
+
   if (shape.shape.type === 'MultiPolygon') {
-    
+
     let _paths = shape.shape.coordinates.map(coord => {
       return coord[0].map(c => {
         return { lat: parseFloat(c[1]), lng: parseFloat(c[0]) }
       })
     })
     return _paths
-  } else {
+  }
+  else {
 
     let _paths = shape.shape.coordinates.map(coord => {
       return coord.map(c => {
@@ -63,6 +69,8 @@ function converterPostgresToGmaps(shape) {
     })
     return _paths
   }
+
+
 }
 
 export { gmapsToArcGis, createCircleRings, converterPostgresToGmaps }

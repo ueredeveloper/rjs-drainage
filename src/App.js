@@ -11,6 +11,34 @@ import { TopBar } from './header';
 import { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng } from './content';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
+/**
+* Estado inicial necessário para limpar o mapa quando precisar. Quando for solicitado a limpeza do mapa a função retornará a variável data para o estado inicial.
+*
+*/
+const initialState = () => {
+  return (
+    {
+      overlays: {
+        marker: {
+          id: null,
+          info: { tp_id: null },
+          position: { lat: -15.7749874, lng: -47.9402802 }
+        },
+        markers: [],
+        circles: [],
+        polygons: [],
+        rectangles: []
+      },
+      system: {
+        outorgas: [], shp: { type: null, coordinates: [] }
+      },
+      shapes: {
+        fraturado: { checked: false, shapes: [] },
+        poroso: { checked: false, shapes: [] }
+      }
+    }
+  )
+};
 
 export default function App() {
   const [mode, setMode] = useState('light');
@@ -23,28 +51,27 @@ export default function App() {
     [],
   );
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          primary: {
-            main: '#153170',
-          },
-          secondary: {
-            main: '#037B35',
-            light: '#808d77',
-            dark: '#2a3623',
-            contrastText: 'rgba(251,251,251,0.87)',
-          },
-          error: {
-            main: '#ff0004',
-          },
-          warning: {
-            main: '#ffeb00',
-          }
+  const theme = useMemo(() =>
+    createTheme({
+      palette: {
+        mode,
+        primary: {
+          main: '#153170',
+        },
+        secondary: {
+          main: '#037B35',
+          light: '#808d77',
+          dark: '#2a3623',
+          contrastText: 'rgba(251,251,251,0.87)',
+        },
+        error: {
+          main: '#ff0004',
+        },
+        warning: {
+          main: '#ffeb00',
         }
-      }),
+      }
+    }),
     [mode],
   );
 
@@ -52,26 +79,10 @@ export default function App() {
   const center = { lat: -15.794393510614238, lng: -47.670852661132805 };
   const zoom = 10;
 
-  const [data, setData] = useState({
-    overlays: {
-      marker: {
-        id: null,
-        info: { tp_id: null },
-        position: { lat: -15.7749874, lng: -47.9402802 }
-      },
-      markers: [],
-      circles: [],
-      polygons: [],
-      rectangles: []
-    },
-    shapes: {
-      fraturado: { checked: false, shapes: [] },
-      poroso: { checked: false, shapes: [] }
-    }
-  });
+  const [data, setData] = useState(initialState());
 
   useEffect(() => {
-    console.log(data.overlays.marker.position)
+    //console.log(data.system.outorgas)
   }, [data])
 
   function onClick() {
@@ -128,10 +139,10 @@ export default function App() {
         </div>
         {/* TABELAS */}
         <div>
-
-          <CollapsibleTable /></div>
+          <CollapsibleTable outorgas={data.system.outorgas} />
+        </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
   )
 }
-
+export { initialState }
