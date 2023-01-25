@@ -3,5 +3,6 @@ import CollapsibleTable from './collapsible-table';
 import ElLineChartJs from './el-line-chart';
 import ElLatLng from './el-lat-lng';
 import ElMapControllers from './el-map-controllers';
+import ElWellType from './el-well-type'
 
-export { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng, ElMapControllers } 
+export { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng, ElMapControllers, ElWellType } 

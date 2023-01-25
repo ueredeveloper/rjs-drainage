@@ -1,43 +1,45 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import IconButton from '@mui/material/IconButton';
+import { findPointsInASystem } from '../services';
 
-function ElLatLng({ data, setData }) {
+
+
+function ElLatLng({ map, tp_id, position, setData }) {
+
+  const [_position, _setPosition] = useState(position);
+  const [_tp_id, _setTpId] = useState(tp_id);
 
   useEffect(() => {
-    /*
-        data.geral.polygons.forEach(polygon => {
-          let arcgis = gmapsToArcGis(polygon);
-          //    console.log(arcgis)
-        });*/
-  //  console.log(data.shapes, data.overlays)
-  }, [data]);
+    _setPosition(position);
+    _setTpId(tp_id);
 
+  }, [position, tp_id]);
 
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    // testando a retirada de todos os pontos do mapa
-    setData(prev=>{
-      return {
-        ...prev,
-        overlays: {...prev.overlays, markers: []}
-      }
-    })
-    /*
+  const handleChange = (event) => {
+    //setTipoPoco(event.target.value);
+  };
+
+  async function _findPointsInASystem() {
+    let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng);
     setData(prev => {
       return {
         ...prev,
-        latlng: { ...prev.latlng, [name]: value }
+        system: { outorgas: points._outorgas, shp: points._shp }
       }
-    })*/
+
+    });
+    map.setCenter({ lat: parseFloat(_position.lat), lng: parseFloat(_position.lng) })
   }
+
   return (
     <Box sx={{ display: 'flex', flexFlow: 'row wrap' }}
     >
       {/* entradas latitude e longitude */}
+
       <Box sx={{ display: 'flex', flex: 4, flexDirection: 'row' }}>
         <TextField
           sx={{
@@ -47,7 +49,7 @@ function ElLatLng({ data, setData }) {
           }}
           label="Latitude"
           name="lat"
-         // value={data.latlng.lat}
+          value={_position.lat}
           onChange={handleChange}
           size="small"
         />
@@ -60,20 +62,23 @@ function ElLatLng({ data, setData }) {
           }}
           label="Longitude"
           name="lng"
-         // value={data.latlng.lng}
+          value={_position.lng}
           onChange={handleChange}
           size="small"
         />
       </Box>
       {/* botôes de manipulação */}
-      <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
-        <IconButton size="large">
+      <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <IconButton size="large" onClick={() => { _findPointsInASystem() }}>
           <SearchIcon />
         </IconButton>
         <IconButton size="large">
           <ContentCopyIcon />
-        </IconButton></Box>
+        </IconButton>
+      </Box>
+
     </Box>
+
   )
 }
 

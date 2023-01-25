@@ -8,12 +8,16 @@ const ElMarker = ({ info, options }) => {
   * @param {integer} tp_id Tipo do poço, tp_id = 1, poço manual - verde, tp_id = 2, poço tubular - azul. Se nulo, é um ponto clicado pelo usuário.
   */
   function setIcon(tp_id) {
+    // yellow red
     if (tp_id === 1) {
       return `https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`
     } else if (tp_id === 2) {
       return `https://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png`
-    } else {
-      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/orange-dot.png`
+    } else if (tp_id === 3) {
+      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png`
+    }
+    else {
+      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png`
     }
   }
 
@@ -30,11 +34,15 @@ const ElMarker = ({ info, options }) => {
     };
   }, [marker]);
 
-  
+
   if (marker) {
-    marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
+    if (info.id === null) {
+      marker.setOptions({ ...options, icon: setIcon(3) });
+    } else {
+      marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
+    }
   }
-  
+
   return null;
 
 };

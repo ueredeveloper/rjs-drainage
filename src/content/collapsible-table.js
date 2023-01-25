@@ -15,16 +15,55 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 function createData(
-  us_nome, us_cpf_cnpj, int_processo, emp_endereco, int_latitude, int_longitude, finalidades) {
+  us_nome, us_cpf_cnpj, int_processo, emp_endereco, demandas, finalidades) {
   return {
     us_nome,
     us_cpf_cnpj,
     int_processo,
     emp_endereco,
-    int_latitude,
-    int_longitude,
+    demandas,
     finalidades
   };
+}
+/**
+* Renderizar as finalidades. Para isso verifica se o objeto contém uma array ou não, depois renderiza de acordo com a quantidade de ítens.
+* @param {object} row
+*/
+function renderPurposes(row) {
+  if (Array.isArray(row.finalidades.finalidades)) {
+    return row.finalidades.finalidades.map((fin, index) => (
+      <TableRow key={index}>
+        <TableCell component="th" scope="row">
+          {fin.id_finalidade}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {fin.descricao}
+        </TableCell>
+        <TableCell>{fin.vazao}</TableCell>
+        <TableCell >{fin.id_interferencia}</TableCell>
+        <TableCell >
+          {/*Math.round(fin.amount * row.price * 100) / 100*/}
+        </TableCell>
+      </TableRow>
+
+    ))
+  } else {
+    return (
+      <TableRow>
+        <TableCell component="th" scope="row">
+          {row.finalidades.finalidades.id_finalidade}
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.finalidades.finalidades.descricao}
+        </TableCell>
+        <TableCell>{row.finalidades.finalidades.vazao}</TableCell>
+        <TableCell >{row.finalidades.finalidades.id_interferencia}</TableCell>
+        <TableCell >
+          {/*Math.round(fin.amount * row.price * 100) / 100*/}
+        </TableCell>
+      </TableRow>
+    )
+  }
 }
 
 function Row(props) {
@@ -44,15 +83,22 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        {/*infos */}
-        <TableCell align="right">{row.us_nome}</TableCell>
-        <TableCell align="right">{row.us_cpf_cnpj}</TableCell>
-        <TableCell align="right">{row.int_processo}</TableCell>
-        <TableCell align="right">{row.emp_endereco}</TableCell>
-        <TableCell align="right">{row.int_latitude}</TableCell>
-        <TableCell align="right">{row.int_longitude}</TableCell>
+        {/** outorgas */}
+        <TableCell >{row.us_nome}</TableCell>
+        <TableCell >{row.us_cpf_cnpj}</TableCell>
+        <TableCell >{row.int_processo}</TableCell>
+        <TableCell >{row.emp_endereco}</TableCell>
+        {/** vazões */}
+        {
+          row.demandas.demandas.map((dem, i) => {
+            return (
+              <TableCell key={i} >{parseFloat(dem.vol_mensal_mm).toFixed(2)}</TableCell>
+            )
+          })
+        }
       </TableRow>
       <TableRow>
+        {/** finalidades */}
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
@@ -66,29 +112,15 @@ function Row(props) {
                   <TableRow>
                     <TableCell>Id Finalidade</TableCell>
                     <TableCell>Finalidade</TableCell>
-                    <TableCell align="right">Vazão</TableCell>
-                    <TableCell align="right">Id Interferência</TableCell>
+                    <TableCell >Vazão</TableCell>
+                    <TableCell >Id Interferência</TableCell>
                   </TableRow>
                 </TableHead>
                 {/*tbody - table body */}
-                
                 <TableBody>
-                 {row.finalidades.map((fin) => (
-                    <TableRow key={fin.id_finalidade[0]}>
-                      <TableCell component="th" scope="row">
-                        {fin.id_finalidade[0]}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {fin.descricao[0]}
-                      </TableCell>
-                      <TableCell>{fin.vazao[0]}</TableCell>
-                      <TableCell align="right">{fin.id_interferencia[0]}</TableCell>
-                      <TableCell align="right">
-                        {/*Math.round(fin.amount * row.price * 100) / 100*/}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {renderPurposes(row)}
                 </TableBody>
+
               </Table>
             </Box>
           </Collapse>
@@ -98,74 +130,50 @@ function Row(props) {
   );
 }
 
-/*
-Row.propTypes = {
-  row: PropTypes.shape({
-    us_nome: PropTypes.string.isRequired,
-    us_cpf_cnpj: PropTypes.string.isRequired,
-    int_processo: PropTypes.string.isRequired,
-    emp_endereco: PropTypes.string.isRequired,
-    int_latitude: PropTypes.string.isRequired,
-    int_longitude: PropTypes.string.isRequired,
-    finalidades: PropTypes.arrayOf(
-      PropTypes.shape({
-        id_finalidade: PropTypes.string.isRequired,
-        descricao: PropTypes.string.isRequired,
-        vazao: PropTypes.string.isRequired,
-        id_interferencia: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-  }).isRequired,
-};*/
-
-/*
-const rows = [
-  createData('', '', '', '', '', ''),
-];*/
-
 export default function CollapsibleTable({ outorgas }) {
 
-  const [rows, setRows] = useState([createData('', '', '', '', '', '', [])])
+  const [rows, setRows] = useState([createData('', '', '', '', { demandas: [] }, { finalidades: [] })])
 
   const _setRows = (outorgas) => {
-
     let _outorgas = outorgas.map(o => {
       return createData(
         o.us_nome,
         o.us_cpf_cnpj,
         o.int_processo,
         o.emp_endereco,
-        o.int_latitude,
-        o.int_longitude,
-        []
+        o.demandas,
+        o.finalidades
       )
     })
     setRows(_outorgas);
   }
+  
   useEffect(() => {
     if (outorgas.length != 0) _setRows(outorgas);
-  }, [outorgas]);
-
+  }, []);
 
   return (
-    <TableContainer sx={{ maxHeight: 300 }} component={Paper}>
+    <TableContainer sx={{ maxHeight: 330 }} component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell align="right">Nome</TableCell>
-            <TableCell align="right">CPF/CNPJ</TableCell>
-            <TableCell align="right">Processo</TableCell>
-            <TableCell align="right">Endereço</TableCell>
-            <TableCell align="right">Latitude</TableCell>
-            <TableCell align="right">Longitude</TableCell>
+            <TableCell>Nome</TableCell>
+            <TableCell>CPF/CNPJ</TableCell>
+            <TableCell>Processo</TableCell>
+            <TableCell >Endereço</TableCell>
+            {['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'].map((month, i) => {
+              return (
+                <TableCell key={i}>{month}</TableCell>
+              )
+            })}
           </TableRow>
         </TableHead>
-        <TableBody>
+        {<TableBody>
           {rows.map((row, i) => (
             <Row key={i} row={row} />
           ))}
-        </TableBody>
+        </TableBody>}
       </Table>
     </TableContainer>
   );

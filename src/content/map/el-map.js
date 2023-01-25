@@ -4,8 +4,7 @@ import { darkMap } from './dark-map';
   * Elemento mapa
 */
 
-
-function ElMap({ mode, map, setMap, center, zoom, onClick }) {
+function ElMap({ mode, center, zoom, onClick, map, setMap }) {
 
   const ref = useRef();
 
@@ -34,7 +33,7 @@ function ElMap({ mode, map, setMap, center, zoom, onClick }) {
     */
   useEffect(() => {
     if (map) {
-      mode==="dark" ? map.setOptions({ styles: darkMap }) : map.setOptions({ styles: [] });
+      mode === "dark" ? map.setOptions({ styles: darkMap }) : map.setOptions({ styles: [] });
     }
 
   }, [map, mode])

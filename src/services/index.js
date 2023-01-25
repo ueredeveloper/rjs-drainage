@@ -57,14 +57,15 @@ async function getShape(shape) {
   return response;
 }
 /**
-* Através de uma coordenada buscar todos os pontos no sistema ao qual pertence a coordenada
-* @param lat Latitude
-*  @para lng Longitue
+* Através de uma coordenada buscar todos os pontos no sistema ao qual pertence a coordenada. url eg: `https://njs-adasa-postgres.ueredeveloper.repl.co/findPointsInASystem?tp_id=1&lat=-15.5334786&lng=-48.1537762`.
+* @param {integer} tp_id Tipo de poço em análise, se tubular ou manual.
+* @param {float} lat Latitude.
+* @para {float} lng Longitue.
 *
   */
-async function findPointsInASystem(lat, lng) {
-
-  let response = await fetch(url + `/findPointsInASystem?lat=${lat}&lng=${lng}`, {
+async function findPointsInASystem(tp_id, lat, lng) {
+  console.log('find tp_id ', tp_id)
+  let response = await fetch(url + `/findPointsInASystem?tp_id=${tp_id}&lat=${lat}&lng=${lng}`, {
     method: 'GET',
     headers: {
       Accept: 'application/JSON',

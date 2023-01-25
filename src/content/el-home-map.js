@@ -9,7 +9,7 @@ import { initialState } from '../App'
 * Element Home Map
 *
 */
-function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setData }) {
+function ElHomeMap({ mode, center, zoom, onClick, map, setMap, data, setData }) {
 
   /**
   * Manter os polígonos para não precisar toda hora acessar o servidor, busca uma vez e salva nesta variável.
@@ -23,7 +23,6 @@ function ElHomeMap({ tab, mode, center, zoom, onClick, map, setMap, data, setDat
   *
   */
   function setChecked(shape, checked) {
-
     setData(prev => {
       return {
         ...prev,
@@ -39,7 +38,6 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
 *
 */
   function setMapNull() {
-
     setData(prev => {
       return {
         ...prev,
@@ -71,7 +69,7 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
   *  @param {array} Shape do subsistema.
   */
   function renderPolyline(shape) {
-    
+
     if (shape.type === 'MultiPolygon') {
       return shape.coordinates.map((coord, i) => {
         return coord.map((_coord, ii) => {
@@ -81,7 +79,7 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
     }
     else {
       return shape.coordinates.map((coord, i) => {
-        return (<ElPolyline  key={i}  coord={coord} map={map} />)
+        return (<ElPolyline key={i} coord={coord} map={map} />)
       })
     }
 
@@ -117,21 +115,27 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
     return _shape;
   }
 
+  function setMarker() {
+
+    let { lat, lng } = data.overlays.marker.position;
+    let {info} = data.overlays.marker;
+    return (
+      <ElMarker
+        info={info}
+        options={{ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map: map }} />
+    )
+
+  }
+
   return (
     <div>
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
         <ElMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
         {/* Desenhar círculos, polígonos etc */}
-        <ElDrawManager map={map} tab={tab} data={data} setData={setData} />
-        {/*
-          data.overlays.circles.map((circle, i) => {
-            return <ElPolilyne key={i} map={map} path={circle.rings} />
-          })
-        */}
+        <ElDrawManager map={map} data={data} setData={setData} />
         {/*marcadores*/}
         {
           data.overlays.markers.map(markers => {
-
             return markers.points.map((info, ii) => {
               // coordenadas da outorga em formato geometry
               let [x, y] = info.int_shape.coordinates;
@@ -147,13 +151,13 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
         {
           data.system.outorgas.map((outorga, i) => {
             let [x, y] = outorga.int_shape.coordinates;
+
             return (
               <ElMarker
                 key={i}
-                info={{ type: 3 }}
+                info={{ id: Date.now(), tp_id: outorga.tp_id }}
                 // coordenada em formato gmaps
                 options={{ position: { lat: y, lng: x }, map: map }} />)
-
           })
         }
         {renderPolyline(data.system.shp)}
@@ -173,9 +177,7 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
           })
         }
 
-        <ElMarker
-          info={data.overlays.marker}
-          options={{ position: data.overlays.marker.position, map: map }} />
+        {setMarker()}
 
       </Wrapper>
       <ElMapControllers setChecked={setChecked} setMapNull={setMapNull} />
