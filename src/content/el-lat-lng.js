@@ -20,15 +20,32 @@ function ElLatLng({ map, tp_id, position, setData }) {
   }, [position, tp_id]);
 
   const handleChange = (event) => {
-    //setTipoPoco(event.target.value);
+
+    setData(prev => {
+      return {
+        ...prev,
+        overlays: {
+          ...prev.overlays,
+          marker: {
+            ...prev.overlays.marker,
+            position: {
+              ...prev.overlays.marker.position,
+              [event.target.name]: event.target.value
+            }
+          }
+        }
+      }
+    });
   };
 
   async function _findPointsInASystem() {
     let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng);
+
+    console.log(points)
     setData(prev => {
       return {
         ...prev,
-        system: { outorgas: points._outorgas, shp: points._shp }
+        system: { outorgas: points._outorgas, hg_shape: points._hg_shape, hg_info: points._hg_info }
       }
 
     });

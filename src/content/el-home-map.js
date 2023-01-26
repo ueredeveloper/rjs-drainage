@@ -69,7 +69,7 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
   *  @param {array} Shape do subsistema.
   */
   function renderPolyline(shape) {
-
+  
     if (shape.type === 'MultiPolygon') {
       return shape.coordinates.map((coord, i) => {
         return coord.map((_coord, ii) => {
@@ -160,7 +160,9 @@ Ideia: Colocar uma variável global para não precisar toda hora buscar no banch
                 options={{ position: { lat: y, lng: x }, map: map }} />)
           })
         }
-        {renderPolyline(data.system.shp)}
+        {
+        
+        renderPolyline(data.system.hg_shape)}
 
         {
           data.shapes.fraturado.shapes.map((shape, i) => {
