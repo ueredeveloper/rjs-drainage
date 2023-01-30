@@ -1,0 +1,30 @@
+
+  const [tf, setTF] = useState([{ jan: 0 }, { fev: 0 }]);
+
+  const onChangeTF = (e) => {
+    let { name, value } = e.target;
+
+
+ setTF(
+      [...tf.map(_t => {
+        let __t = Object.entries(_t)
+        if (__t[0][0] === name) {
+          return { [name]: value }
+        }
+        else {
+          return _t
+        }
+      })]
+    )
+  }
+
+
+   {tf.map((_tf, i) => {
+                    let [_m] = Object.entries(_tf)
+                    return (
+                      <TableCell key={'_' + i}><TextField id={_m[0]} label={_m[0]} variant="standard" name={_m[0]} value={_m[1]} onChange={e => { onChangeTF(e) }} />
+                      </TableCell>
+                    )
+                  }
+                  )}
+

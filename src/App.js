@@ -8,7 +8,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 // my components
 import { TopBar } from './header';
-import { ElHomeMap, CollapsibleTable, ElBarChart, ElLatLng, ElWellType } from './content';
+import { ElHomeMap, CollapsibleTable, ElBarChart, ElLatLng, ElWellType, ElAnalyse, ElUser } from './content';
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
 /**
@@ -22,8 +22,219 @@ const initialState = () => {
         marker: {
           id: null,
           info: { id: null, tp_id: 1 },
-         /* position: { lat: -15.7749874, lng: -47.9402802 },*/
-          position: {lat: -15.821111,lng: -48.101111}
+          /* position: { lat: -15.7749874, lng: -47.9402802 },*/
+          position: { lat: -15.821111, lng: -48.101111 },
+          user:{
+            "id": 5220,
+            "us_id": 36426,
+            "us_nome": "LAUNÍLIO DE SOUSA OLIVEIRA",
+            "us_cpf_cnpj": "31373119187",
+            "us_email": null,
+            "us_cep": " ",
+            "us_endereco": "Nucleo Rural Bananal, Chacara 13",
+            "us_caixa_postal": "0",
+            "us_bairro": " ",
+            "us_telefone_1": "6130332677",
+            "us_telefone_2": "",
+            "emp_id": 40996,
+            "emp_endereco": "NÚCLEO RURAL BANANAL, CHÁCARA 13",
+            "int_processo": "197000312/2007",
+            "int_id": 2473,
+            "int_num_ato": "003/2008",
+            "int_latitude": -15.725594,
+            "int_longitude": -47.901416,
+            "int_shape": {
+              "type": "Point",
+              "crs": {
+                "type": "name",
+                "properties": {
+                  "name": "EPSG:4674"
+                }
+              },
+              "coordinates": [
+                -47.901415533999966,
+                -15.72559362499993
+              ]
+            },
+            "int_data_publicacao": "2008-10-03T00:00:00.000Z",
+            "int_data_vencimento": "2099-12-31T00:00:00.000Z",
+            "ti_id": 2,
+            "ti_descricao": "SUBTERRANEA",
+            "sp_id": 4,
+            "sp_descricao": "OUTORGADO",
+            "tp_id": 1,
+            "tp_descricao": "MANUAL    ",
+            "to_tipo_outorga": 3,
+            "to_descricao": "REGISTRO DE USO",
+            "bh_id": 7,
+            "bh_nome": "Rio Paranoá",
+            "uh_id": 34,
+            "uh_nome": "Ribeirão Bananal",
+            "hg_codigo": "022_07_P1",
+            "hg_sistema": "P1",
+            "hg_subsistema": "",
+            "finalidades": {
+              "finalidades": {
+                "id_finalidade": "11791930",
+                "id_tipo_finalidade": "7",
+                "id_interferencia": "2473",
+                "vazao": "1200.0000",
+                "subfinalidade": " ",
+                "descricao": "ABASTECIMENTO HUMANO"
+              }
+            },
+            "demandas": {
+              "demandas": [
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68194689",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "1",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68202296",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "2",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "28",
+                  "vol_mensal_mm": "33.600000"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68209903",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "3",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68217510",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "4",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "30",
+                  "vol_mensal_mm": "36.000000"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68225117",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "5",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68232724",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "6",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "30",
+                  "vol_mensal_mm": "36.000000"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68240331",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "7",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68247938",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "8",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68255545",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "9",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "30",
+                  "vol_mensal_mm": "36.000000"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68263152",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "10",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68270759",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "11",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "30",
+                  "vol_mensal_mm": "36.000000"
+                },
+                {
+                  "id_interferencia": "2473",
+                  "id_demanta_total": "68278366",
+                  "vazao_lh": "600.00",
+                  "vazao_dia": "1200.00",
+                  "mes": "12",
+                  "vazao_mh": "0.6000000",
+                  "tempo_h": "2",
+                  "vol_max_md": "1.2000000",
+                  "periodo_d": "31",
+                  "vol_mensal_mm": "1"
+                }
+              ],
+              "volume": {
+                "vol_a_ma": "1"
+              }
+            }
+          },
         },
         markers: [],
         circles: [],
@@ -31,7 +242,7 @@ const initialState = () => {
         rectangles: []
       },
       system: {
-        outorgas: [
+        points: [
           {
             "id": 5220,
             "us_id": 36426,
@@ -1529,13 +1740,23 @@ const initialState = () => {
               }
             }
           }
-        ], hg_shape: { type: null, coordinates: [] }, hg_info: {
+        ], 
+        hg_shape: { type: null, coordinates: [] }, 
+        hg_info: {
           bacia_nome: "",
           cod_plan: "",
           re_cm_ano: 10,
           sistema: "",
           uh_codigo: 0,
           uh_label: ""
+        }, 
+        hg_analyse: {
+          "_q_ex": 37184373,
+          "_q_ex_per": "100",
+          "_q_points": 78019.23,
+          "_n_points": 39,
+          "_q_points_per": "0.21",
+          "_vol_avaiable": 37106353.77
         }
       },
       shapes: {
@@ -1589,7 +1810,7 @@ export default function App() {
 
   useEffect(() => {
 
-    console.log(data.system.outorgas.length)
+  //  console.log(data.system)
   }, [data])
 
   function onClick() {
@@ -1603,61 +1824,9 @@ export default function App() {
   };
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        {/* BARRA SUPERIOR - LOGO - LOGIN - ICONE DARK MAP*/}
-        <TopBar ColorModeContext={ColorModeContext} />
-
-        <div className='flex flex-wrap'>
-          {/* MAPA */}
-          <div className='flex-1 min-w[200px]'>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={"0"}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList>
-                    <Tab label="Mapa" value="0" />
-                  </TabList>
-                </Box>
-                <TabPanel value="0">
-                  <ElHomeMap tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} /></TabPanel>
-              </TabContext>
-            </Box>
-          </div>
-          {/* TAB PANES (BUSCAR, SUPERFICIAL SUBTERÂNEO */}
-          <div className='flex-1 min-w[200px]'>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Geral" value="1" />
-                    <Tab label="Superficial" value="2" />
-                    <Tab label="Subterrâneo" value="3" />
-                  </TabList>
-                </Box>
-                <TabPanel value="1">
-                  <ElLatLng
-                    map={map}
-                    tp_id={data.overlays.marker.info.tp_id}
-                    position={data.overlays.marker.position}
-                    setData={setData}
-                  />
-                  <ElWellType
-                    tp_id={data.overlays.marker.info.tp_id}
-                    setData={setData} />
-                  <ElBarChart system={data.system} />
-                </TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-              </TabContext>
-            </Box>
-          </div>
-        </div>
-        {/* TABELAS */}
-        <div>
-          <CollapsibleTable outorgas={data.system.outorgas} />
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+   <ElUser marker={data.overlays.marker}/>
   )
 }
 export { initialState }
+
+

@@ -80,7 +80,7 @@ const ElDrawManager = ({ map, data, setData }) => {
             overlays: {
               ...prev.overlays,
               circles: [
-                ...prev.overlays.circles, { id: id, center: center, radius: radius }],
+                ...prev.overlays.circles, { id: id, center: center, radius: radius, draw: event.overlay }],
               markers: [
                 ...prev.overlays.markers, {
                   id: id,
@@ -108,7 +108,7 @@ const ElDrawManager = ({ map, data, setData }) => {
               ...prev.overlays,
               polygons: [...prev.overlays.polygons, {
                 id: id,
-                rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } })
+                rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } }),  draw: event.overlay
               }],
               markers: [
                 ...prev.overlays.markers, {
@@ -141,7 +141,7 @@ const ElDrawManager = ({ map, data, setData }) => {
             ...prev,
             overlays: {
               ...prev.overlays,
-              rectangles: [...prev.overlays.rectangles, { id: id, ne: NE, sw: SW }],
+              rectangles: [...prev.overlays.rectangles, { id: id, ne: NE, sw: SW,  draw: event.overlay }],
               markers: [
                 ...prev.overlays.markers, {
                   id: id,

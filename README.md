@@ -181,6 +181,10 @@ A tabela com a lista de outorgas fica abaixo aos items mapa e tabs que estão um
 [converter excel-json-markdown](https://tableconvert.com/json-to-markdown)
 
 
+ 27/01/2023
+
+ 1 - Adicionar um speaddeal no mapa para opções como exportar excel etc.<br>
+ [spead deal](https://mui.com/material-ui/react-speed-dial/)
  
 
 ### Temas estudados: <br>

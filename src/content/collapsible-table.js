@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -30,40 +29,43 @@ function createData(
 * @param {object} row
 */
 function renderPurposes(row) {
-  if (Array.isArray(row.finalidades.finalidades)) {
-    return row.finalidades.finalidades.map((fin, index) => (
-      <TableRow key={index}>
-        <TableCell component="th" scope="row">
-          {fin.id_finalidade}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {fin.descricao}
-        </TableCell>
-        <TableCell>{fin.vazao}</TableCell>
-        <TableCell >{fin.id_interferencia}</TableCell>
-        <TableCell >
-          {/*Math.round(fin.amount * row.price * 100) / 100*/}
-        </TableCell>
-      </TableRow>
+  if (row.finalidades !== null) {
+    if (Array.isArray(row.finalidades.finalidades)) {
+      return row.finalidades.finalidades.map((fin, index) => (
+        <TableRow key={index}>
+          <TableCell component="th" scope="row">
+            {fin.id_finalidade}
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {fin.descricao}
+          </TableCell>
+          <TableCell>{fin.vazao}</TableCell>
+          <TableCell >{fin.id_interferencia}</TableCell>
+          <TableCell >
+            {/*Math.round(fin.amount * row.price * 100) / 100*/}
+          </TableCell>
+        </TableRow>
 
-    ))
-  } else {
-    return (
-      <TableRow>
-        <TableCell component="th" scope="row">
-          {row.finalidades.finalidades.id_finalidade}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.finalidades.finalidades.descricao}
-        </TableCell>
-        <TableCell>{row.finalidades.finalidades.vazao}</TableCell>
-        <TableCell >{row.finalidades.finalidades.id_interferencia}</TableCell>
-        <TableCell >
-          {/*Math.round(fin.amount * row.price * 100) / 100*/}
-        </TableCell>
-      </TableRow>
-    )
+      ))
+    } else {
+      return (
+        <TableRow>
+          <TableCell component="th" scope="row">
+            {row.finalidades.finalidades.id_finalidade}
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.finalidades.finalidades.descricao}
+          </TableCell>
+          <TableCell>{row.finalidades.finalidades.vazao}</TableCell>
+          <TableCell >{row.finalidades.finalidades.id_interferencia}</TableCell>
+          <TableCell >
+            {/*Math.round(fin.amount * row.price * 100) / 100*/}
+          </TableCell>
+        </TableRow>
+      )
+    }
   }
+
 }
 
 function Row(props) {
@@ -83,7 +85,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        {/** outorgas */}
+        {/** points */}
         <TableCell >{row.us_nome}</TableCell>
         <TableCell >{row.us_cpf_cnpj}</TableCell>
         <TableCell >{row.int_processo}</TableCell>
@@ -130,12 +132,12 @@ function Row(props) {
   );
 }
 
-export default function CollapsibleTable({ outorgas }) {
+export default function CollapsibleTable({ points }) {
 
   const [rows, setRows] = useState([createData('', '', '', '', { demandas: [] }, { finalidades: [] })])
 
-  const _setRows = (outorgas) => {
-    let _outorgas = outorgas.map(o => {
+  const _setRows = (points) => {
+    let _points = points.map(o => {
       return createData(
         o.us_nome,
         o.us_cpf_cnpj,
@@ -145,12 +147,13 @@ export default function CollapsibleTable({ outorgas }) {
         o.finalidades
       )
     })
-    setRows(_outorgas);
+    setRows(_points);
   }
-  
+
+
   useEffect(() => {
-    if (outorgas.length != 0) _setRows(outorgas);
-  }, []);
+    if (points.length !== 0) _setRows(points);
+  }, [points]);
 
   return (
     <TableContainer sx={{ maxHeight: 330 }} component={Paper}>

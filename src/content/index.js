@@ -5,5 +5,7 @@ import ElLatLng from './el-lat-lng';
 import ElMapControllers from './el-map-controllers';
 import ElWellType from './el-well-type';
 import ElBarChart from './el-bar-chart';
+import ElUser from './el-user';
+import ElAnalyse from './el-analyse';
 
-export { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng, ElMapControllers, ElWellType, ElBarChart } 
+export { ElHomeMap, CollapsibleTable, ElLineChartJs, ElLatLng, ElMapControllers, ElWellType, ElBarChart, ElUser,  ElAnalyse} 

@@ -11,7 +11,7 @@ const gmapsToArcGis = (rings) => {
     arcGis[0].push([r.lng(), r.lat()])
   })
   // adicionar a primeira coordenada no final do polígono para fechar completamente
-  if (arcGis[0][0][0] != arcGis[0][arcGis[0].length - 1][0]) {
+  if (arcGis[0][0][0] !== arcGis[0][arcGis[0].length - 1][0]) {
     arcGis[0].push(arcGis[0][0])
   }
   return arcGis;
@@ -45,11 +45,6 @@ function createCircleRings(center, radius) {
   *
   */
 function converterPostgresToGmaps(shape) {
-
-  console.log(shape.shape.type)
-   shape.shape.coordinates.map(c=>{
-     console.log(c.length)
-   })
 
   if (shape.shape.type === 'MultiPolygon') {
 

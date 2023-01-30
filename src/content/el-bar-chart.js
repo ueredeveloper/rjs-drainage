@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { nFormatter } from './tools';
 
 ChartJS.register(
   CategoryScale,
@@ -18,51 +19,28 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import {nFormatter} from './tools';
 
-export default function ElBarChart({ system }) {
 
-  function getFlows(re, outorgas) {
-    let sum = 0;
+export default function ElBarChart({ hg_analyse }) {
 
-    outorgas.map((data) => {
-      if (typeof data.demandas.volume.vol_a_ma === 'undefined') {
-        return sum += 0;
-      } else {
-        return sum += parseFloat(data.demandas.volume.vol_a_ma);
-      }
-    });
-    return [re, sum];
-  }
+    /**
+    * Dados sobre a disponibilidade.
+    */
+  const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
 
-  function getPercentFlows(re, outorgas) {
-    let sum = 0;
-    outorgas.map((data) => {
-      console.log(data.demandas.volume.vol_a_ma === 'undefined', data.demandas.volume.vol_a_ma)
-      if (typeof data.demandas.volume.vol_a_ma === 'undefined') {
-        return sum += 0;
-      } else {
-        return sum += parseFloat(data.demandas.volume.vol_a_ma);
-      }
-    });
-    let perRe = ((re * 100) / re).toFixed(0);
-    let perOut = ((sum * 100) / re).toFixed(2);
-    console.log([perRe, perOut])
-    return [perRe, perOut];
-  }
-
-  const [_system, _setSystem] = useState(system);
+  useEffect(() => {
+    _setHGAnalyse(hg_analyse)
+  }, [hg_analyse])
 
   const options = {
     responsive: true,
     scales: {
       y: {
         beginAtZer: 0,
-        position: 'left', 
-        ticks:{
-          callback: function(value, index, values){
-            return nFormatter(value,1)
-
+        position: 'left',
+        ticks: {
+          callback: function(value) {
+            return nFormatter(value, 1)
           }
         }
       },
@@ -72,8 +50,8 @@ export default function ElBarChart({ system }) {
         grid: {
           drawOnChartArea: false
         },
-        ticks:{
-          callback: function(value, index, values){
+        ticks: {
+          callback: function(value) {
             return `${value}%`
 
           }
@@ -89,10 +67,6 @@ export default function ElBarChart({ system }) {
     },
   };
 
-  useEffect(() => {
-
-  })
-
   const data = {
     labels: ['Subsistema', 'Outorgados'],
     datasets:
@@ -100,7 +74,7 @@ export default function ElBarChart({ system }) {
         {
           label: '',
 
-          data: getFlows(system.hg_info.re_cm_ano, system.outorgas),
+          data: [_hg_analyse._q_ex, _hg_analyse._q_points],
           type: 'line',
           backgroundColor: 'aqua',
           borderColor: 'black',
@@ -111,17 +85,20 @@ export default function ElBarChart({ system }) {
           label: 'Vazão',
           id: "A",
           backgroundColor: 'green',
-          data: getFlows(system.hg_info.re_cm_ano, system.outorgas),
+          data: [_hg_analyse._q_ex, _hg_analyse._q_points],
         }, {
           label: 'Porcentagem',
           yAxisID: 'percentage',
           backgroundColor: 'red',
-          data: getPercentFlows(system.hg_info.re_cm_ano, system.outorgas),
+          data: [_hg_analyse._q_ex_per, _hg_analyse._q_points_per],
         }
       ]
   };
-
-    console.log(nFormatter(16000000000,1))
-
-  return <Bar options={options} data={data} />;
+  
+  return (
+    <div>
+      {/** responsividade css => h-52...*/}
+      <Bar className='h-52 min-h-52 max-h-52 w-full max-w-full' options={options} data={data} />
+    </div>
+  );
 }
